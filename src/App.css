@@ -63,8 +63,13 @@ h1, h2, h3 {
   letter-spacing: -0.04em;
 }
 
-.display-huge {
-  font-size: clamp(3rem, 7vw, 10rem);
+.display-huge-black {
+  font-size: clamp(3rem, 5vw, 10rem);
+  color: var(--black);
+}
+
+.display-huge-white {
+  font-size: clamp(3rem, 5vw, 10rem);
   color: var(--white);
 }
 

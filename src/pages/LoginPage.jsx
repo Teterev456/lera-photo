@@ -19,7 +19,7 @@ const LoginPage = () => {
             [ ВХОД НА САЙТ ]
           </div>
           <h2
-            className="display-huge"
+            className="display-huge-black"
             style={{ fontSize: "clamp(3rem, 8vw, 8rem)", marginBottom: "2rem" }}
           >
             ПРОФИЛЬ

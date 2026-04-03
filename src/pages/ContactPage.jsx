@@ -14,7 +14,7 @@ const ContactPage = () => {
             className="meta-text"
             style={{ marginBottom: "1rem", color: "var(--blue)" }}
           ></div>
-          <h2 className="display-huge">ВОПРОСЫ И ПРЕДЛОЖЕНИЯ</h2>
+          <h2 className="display-huge-white">ВОПРОСЫ И ПРЕДЛОЖЕНИЯ</h2>
           <p className="meta-text" style={{ opacity: 0.5, marginTop: "2rem" }}>
             ТЕКУЩИЙ_СТАТУС: ПРИЁМ ПРЕДЛОЖЕНИЙ
           </p>
