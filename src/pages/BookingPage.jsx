@@ -1,52 +1,17 @@
 import React, { useState } from "react";
+import BookingCalendar from "../components/BookingCalendar";
 
 const BookingPage = () => {
   const [sessionType, setSessionType] = useState("ИНДИВИДУАЛЬНАЯ");
-  const [selectedDate, setSelectedDate] = useState("15");
+  const [selectedDate, setSelectedDate] = useState("7");
   const [selectedTime, setSelectedTime] = useState("13:00");
 
   const sessionTypes = ["ИНДИВИДУАЛЬНАЯ", "ГРУППОВАЯ", "РЕПОРТАЖНАЯ"];
-  const timeSlots = ["10:00", "13:00", "16:00", "19:00"];
-
-  // Calendar data - October 2024
-  const days = [
-    { day: "30", status: "disabled" },
-    { day: "1", status: "available" },
-    { day: "2", status: "" },
-    { day: "3", status: "available" },
-    { day: "4", status: "" },
-    { day: "5", status: "" },
-    { day: "6", status: "available" },
-    { day: "7", status: "" },
-    { day: "8", status: "available" },
-    { day: "9", status: "" },
-    { day: "10", status: "booked" },
-    { day: "11", status: "" },
-    { day: "12", status: "" },
-    { day: "13", status: "available" },
-    { day: "14", status: "" },
-    { day: "15", status: "available" },
-    { day: "16", status: "" },
-    { day: "17", status: "" },
-    { day: "18", status: "available" },
-    { day: "19", status: "" },
-    { day: "20", status: "booked" },
-    { day: "21", status: "booked" },
-    { day: "22", status: "" },
-    { day: "23", status: "available" },
-    { day: "24", status: "" },
-    { day: "25", status: "" },
-    { day: "26", status: "available" },
-    { day: "27", status: "" },
-    { day: "28", status: "booked" },
-    { day: "29", status: "" },
-    { day: "30", status: "" },
-    { day: "31", status: "available" },
-  ];
+  const timeSlots = ["9:00", "13:00", "17:00", "20:00"];
 
   const handleBooking = () => {
     alert(
-      `Booking confirmed!\nDate: ${selectedDate} OCTOBER 2024\nTime: ${selectedTime} — ${
+      `Booking confirmed!\nDate: ${selectedDate} April 2026\nTime: ${selectedTime} — ${
         parseInt(selectedTime) + 2
       }:00\nType: ${sessionType}`
     );
@@ -86,38 +51,7 @@ const BookingPage = () => {
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="meta-text">ВЫБОР_ДАТЫ</label>
-            <div className="calendar-grid">
-              <div className="calendar-header meta-text">
-                <span>◄</span>
-                <span>МАРТ 2026</span>
-                <span>►</span>
-              </div>
-              <div className="calendar-days">
-                {["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map((d) => (
-                  <div key={d} className="day-label meta-text">
-                    {d}
-                  </div>
-                ))}
-                {days.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className={`day ${item.status} ${
-                      selectedDate === item.day && item.status === "available"
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      item.status === "available" && setSelectedDate(item.day)
-                    }
-                  >
-                    {item.day}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <BookingCalendar />
 
           <div className="form-group">
             <label className="meta-text">ВРЕМЯ</label>
@@ -161,7 +95,7 @@ const BookingPage = () => {
 
             <div className="info-block">
               <span className="meta-text info-label">ДАТА</span>
-              <p className="info-text">{selectedDate} МАРТ 2026</p>
+              <p className="info-text">{selectedDate} АПРЕЛЬ 2026</p>
             </div>
             <div className="info-block">
               <span className="meta-text info-label">ВРЕМЯ</span>
