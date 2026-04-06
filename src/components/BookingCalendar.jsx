@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import { useDispatch, useSelector } from "react-redux";
+import { setDate } from "../redux/slices/bookingSlice";
 
 dayjs.locale("ru");
 
 const BookingCalendar = () => {
-  const [currentMonth, setCurrentMonth] = useState(
-    dayjs(new Date().setDate(new Date().getDate() + 1))
-  );
-  const [selectedDate, setSelectedDate] = useState(null);
+  const dispatch = useDispatch();
+  const { chosenDate } = useSelector((state) => state.booking);
+
+  const [currentMonth, setCurrentMonth] = useState(dayjs(new Date()));
 
   const blockedDates = ["2026-04-12", "2026-04-19", "2026-04-26"];
   const bookedDates = ["2026-04-17", "2026-04-13", "2026-04-08"];
@@ -69,12 +71,12 @@ const BookingCalendar = () => {
 
   const goPrevMonth = () => {
     setCurrentMonth(currentMonth.subtract(1, "month"));
-    setSelectedDate(null);
+    setDate(null);
   };
 
   const goNextMonth = () => {
     setCurrentMonth(currentMonth.add(1, "month"));
-    setSelectedDate(null);
+    setDate(null);
   };
 
   const weeks = getWeeksArray();
@@ -93,7 +95,7 @@ const BookingCalendar = () => {
           </span>
         </div>
         <div className="calendar-days">
-          {["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map((d) => (
+          {["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"].map((d) => (
             <div key={d} className="day-label meta-text">
               {d}
             </div>
@@ -105,14 +107,14 @@ const BookingCalendar = () => {
                 <div
                   key={`${weekIndex}-${dayIndex}`}
                   className={`day ${item.status} ${
-                    selectedDate === item.date.format("YYYY-MM-DD") &&
+                    chosenDate === item.date.format("DD-MM-YYYY") &&
                     item.status === "available"
                       ? "selected"
                       : ""
                   }`}
                   onClick={() => {
                     if (item.status === "available") {
-                      setSelectedDate(item.date.format("YYYY-MM-DD"));
+                      dispatch(setDate(item.date.format("DD-MM-YYYY")));
                     }
                   }}
                 >

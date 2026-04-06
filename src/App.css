@@ -338,6 +338,66 @@ nav .logo {
   display: block;
   margin-bottom: 1rem;
   color: var(--blue);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--black);
+  width: fit-content;
+}
+
+.counter-btn {
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--black);
+}
+
+.counter-btn:hover:not(:disabled) {
+  background: var(--blue);
+  color: var(--white);
+}
+
+.counter-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.counter input {
+  width: 64px;
+  height: 48px;
+  border: none;
+  border-left: 1px solid var(--gray);
+  border-right: 1px solid var(--gray);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  background: transparent;
+  pointer-events: none;
+  color: var(--black);
+}
+
+/* Remove number input arrows */
+.counter input::-webkit-outer-spin-button,
+.counter input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .session-options {
@@ -458,6 +518,10 @@ nav .logo {
 
 .book-btn:hover {
   background: var(--black);
+}
+
+.book-btn:disabled {
+  background: var(--gray);
 }
 
 /* Login */

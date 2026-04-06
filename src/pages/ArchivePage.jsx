@@ -18,7 +18,7 @@ const ArchivePage = () => {
 
       <section className="portfolio-grid">
         {projects.map((project) => (
-          <PhotoCard {...project} />
+          <PhotoCard key={project.id} {...project} />
         ))}
       </section>
     </div>

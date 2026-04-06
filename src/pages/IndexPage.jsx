@@ -88,7 +88,7 @@ const IndexPage = ({ setPage }) => {
 
       <section className="featured-grid">
         {projects.slice(-2).map((project) => (
-          <PhotoCard {...project} />
+          <PhotoCard key={project.id} {...project} />
         ))}
       </section>
     </div>
