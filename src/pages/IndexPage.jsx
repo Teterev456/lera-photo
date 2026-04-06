@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from "react";
 import indexImage from "../assets/img/index.jpg";
-import work1 from "../assets/img/work1.jpg";
-import work2 from "../assets/img/work2.jpg";
+import projects from "../assets/data/projects";
+import PhotoCard from "../components/PhotoCard";
 
 const IndexPage = ({ setPage }) => {
   const date = new Date();
-  const featuredProjects = [
-    {
-      id: "01",
-      code: "В ПОМЕЩЕНИИ",
-      type: "ИНДИВИДУАЛЬНАЯ СЪЁМКА",
-      title: "СЕРЬЁЗНАЯ_ВЕРОНИКА",
-      image: work1,
-    },
-    {
-      id: "02",
-      code: "УЛИЧНАЯ",
-      type: "ИНДИВИДУАЛЬНАЯ СЪЁМКА",
-      title: "ДАРЬЯ_И_ЧЕМОДАН",
-      image: work2,
-    },
-  ];
 
   return (
     <div className="page-section">
@@ -103,33 +87,8 @@ const IndexPage = ({ setPage }) => {
       </section>
 
       <section className="featured-grid">
-        {featuredProjects.map((project) => (
-          <article
-            key={project.id}
-            className="project-card panel"
-            onClick={() => setPage("archive")}
-          >
-            <img src={project.image} alt={project.type} />
-            <div className="project-overlay">
-              <div className="project-meta-top meta-text">
-                <span>[{project.id}]</span>
-                <span>{project.code}</span>
-              </div>
-              <div>
-                <div
-                  className="meta-text"
-                  style={{ marginBottom: "0.5rem", color: "var(--white)" }}
-                >
-                  {project.type}
-                </div>
-                <h3 className="project-title">
-                  {project.title.split(" ")[0]}
-                  <br />
-                  {project.title.split(" ")[1]}
-                </h3>
-              </div>
-            </div>
-          </article>
+        {projects.slice(-2).map((project) => (
+          <PhotoCard {...project} />
         ))}
       </section>
     </div>
