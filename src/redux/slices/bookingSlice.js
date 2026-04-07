@@ -7,9 +7,10 @@ const initialState = {
   chosenType: "-",
   chosenDate: "-",
   chosenTime: "-",
-  price: 0,
+  allPhoto: false,
   chosenCountPeople: 2,
   chosenReportHours: 2,
+  price: 0,
 };
 
 const bookingSlice = createSlice({
@@ -42,6 +43,13 @@ const bookingSlice = createSlice({
       } else if (state.chosenType === "РЕПОРТАЖНАЯ") {
         state.price = 3 * state.chosenReportHours;
       }
+
+      if (state.allPhoto === true) {
+        state.price += 1;
+      }
+    },
+    setAllPhoto(state, action) {
+      state.allPhoto = action.payload;
     },
     setChosenCountPeople(state, action) {
       state.chosenCountPeople = action.payload;
@@ -65,6 +73,7 @@ export const {
   setChosenCountPeople,
   setChosenReportHours,
   clearInfo,
+  setAllPhoto,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

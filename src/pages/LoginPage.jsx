@@ -6,7 +6,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Logged in successfully!");
+    alert("Вход выполнен успешно!");
   };
 
   return (

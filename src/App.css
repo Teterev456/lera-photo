@@ -522,6 +522,7 @@ nav .logo {
 
 .book-btn:disabled {
   background: var(--gray);
+  cursor: default;
 }
 
 /* Login */
@@ -757,6 +758,40 @@ nav .logo {
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
   text-align: right;
+}
+
+/* Checkbox Container */
+.checkbox-group {
+  margin-bottom: 2rem;
+}
+
+.booking-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--gray);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.booking-checkbox:hover {
+  border-color: var(--blue);
+}
+
+.booking-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+.checkbox-group .meta-text {
+  margin-top: 0.5rem;
+  opacity: 0.5;
+  font-size: 1rem;
+  accent-color: var(--black);
+  margin-left: 1rem;
 }
 
 /* Responsive */
