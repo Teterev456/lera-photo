@@ -21,22 +21,27 @@ const Counter = ({ title }) => {
     dispatch(setPrice());
   }, [chosenCountPeople, chosenReportHours]);
 
+  React.useEffect(() => {
+    dispatch(setChosenCountPeople(2));
+    dispatch(setChosenReportHours(2));
+  }, []);
+
   const decrement = () => {
     if (count > minCount) {
-      setCount(count - 1);
+      const newValue = count - 1;
+      setCount(newValue);
+      dispatch(setChosenCountPeople(newValue));
+      dispatch(setChosenReportHours(newValue));
     }
-    const newValue = count;
-    dispatch(setChosenCountPeople(newValue));
-    dispatch(setChosenReportHours(newValue));
   };
 
   const increment = () => {
     if (count < maxCount) {
-      setCount(count + 1);
+      const newValue = count + 1;
+      setCount(newValue);
+      dispatch(setChosenCountPeople(newValue));
+      dispatch(setChosenReportHours(newValue));
     }
-    const newValue = count;
-    dispatch(setChosenCountPeople(newValue));
-    dispatch(setChosenReportHours(newValue));
   };
 
   return (

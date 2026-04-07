@@ -65,7 +65,7 @@ const BookingInfo = () => {
               color: "var(--blue)",
             }}
           >
-            {price === 0 ? "0 ₽" : `${price},000 ₽`}
+            {price === 0 ? "0 ₽" : `${price * 10}00 ₽`}
           </p>
         </div>
       </div>

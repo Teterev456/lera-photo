@@ -49,6 +49,11 @@ const bookingSlice = createSlice({
     setChosenReportHours(state, action) {
       state.chosenReportHours = action.payload;
     },
+    clearInfo(state, action) {
+      state.chosenType = "-";
+      state.chosenDate = "-";
+      state.chosenTime = "-";
+    },
   },
 });
 
@@ -59,6 +64,7 @@ export const {
   setPrice,
   setChosenCountPeople,
   setChosenReportHours,
+  clearInfo,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

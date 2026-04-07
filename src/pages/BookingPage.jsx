@@ -2,13 +2,18 @@ import React from "react";
 import BookingCalendar from "../components/BookingCalendar";
 import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
-import { setPrice, setTime, setType } from "../redux/slices/bookingSlice";
+import {
+  clearInfo,
+  setPrice,
+  setTime,
+  setType,
+} from "../redux/slices/bookingSlice";
 import BookingInfo from "../components/BookingInfo";
 
 const BookingPage = () => {
   const dispatch = useDispatch();
 
-  const { chosenType, chosenDate, chosenTime } = useSelector(
+  const { chosenType, chosenDate, chosenTime, price } = useSelector(
     (state) => state.booking
   );
 
@@ -19,8 +24,10 @@ const BookingPage = () => {
     alert(
       `Booking confirmed!\nDate: ${chosenDate}\nTime: ${chosenTime} — ${
         parseInt(chosenTime) + 2
-      }:00\nType: ${chosenType}`
+      }:00\nType: ${chosenType}\nPrice: ${price * 10}00 ₽`
     );
+    dispatch(clearInfo());
+    dispatch(setPrice());
   };
 
   return (
