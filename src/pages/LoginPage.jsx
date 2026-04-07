@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const LoginPage = () => {
   const [activeTab, setActiveTab] = useState("ВХОД");
+  const [repeatPass, setRepeatPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +43,10 @@ const LoginPage = () => {
                   key={tab}
                   className={`login-tab ${activeTab === tab ? "active" : ""}`}
                   type="button"
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setRepeatPassword(!repeatPass);
+                  }}
                 >
                   {tab}
                 </button>
@@ -58,6 +62,12 @@ const LoginPage = () => {
                 <label className="meta-text">ПАРОЛЬ</label>
                 <input type="password" placeholder="••••••••" required />
               </div>
+              {repeatPass === true ? (
+                <div className="input-group">
+                  <label className="meta-text">ПОВТОРИТЕ ПАРОЛЬ</label>
+                  <input type="password" placeholder="••••••••" required />
+                </div>
+              ) : null}
               <button type="submit" className="login-submit">
                 ВХОД →
               </button>

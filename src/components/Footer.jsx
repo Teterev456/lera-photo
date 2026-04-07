@@ -1,18 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Footer = ({ setPage }) => {
+const Footer = () => {
   return (
     <footer className="site-footer panel">
-      <a
-        href="#"
-        className="footer-logo"
-        onClick={(e) => {
-          e.preventDefault();
-          setPage("index");
-        }}
-      >
+      <Link to="/" className="footer-logo">
         <span className="overline">PH</span>LERYA
-      </a>
+      </Link>
       <div className="footer-links">
         <a
           href="https://www.instagram.com/ph.lerya"

@@ -1,38 +1,28 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-const Header = ({ currentPage, setPage }) => {
+const Header = () => {
   const navItems = [
-    { id: "index", label: "ГЛАВНАЯ" },
-    { id: "archive", label: "ПОРТФОЛИО" },
-    { id: "booking", label: "ОФОРМИТЬ ЗАЯВКУ" },
-    { id: "contact", label: "КОНТАКТЫ" },
-    { id: "login", label: "ВОЙТИ" },
+    { id: "/", label: "ГЛАВНАЯ" },
+    { id: "/archive", label: "ПОРТФОЛИО" },
+    { id: "/booking", label: "ОФОРМИТЬ ЗАЯВКУ" },
+    { id: "/contact", label: "КОНТАКТЫ" },
+    { id: "/login", label: "ВОЙТИ" },
   ];
 
   return (
     <nav>
-      <a
-        href="#"
-        className="nav-item logo"
-        onClick={(e) => {
-          e.preventDefault();
-          setPage("index");
-        }}
-      >
+      <NavLink to="/" className="nav-item logo">
         <span className="overline">PH</span>LERYA
-      </a>
+      </NavLink>
       {navItems.map((item) => (
-        <a
+        <NavLink
           key={item.id}
-          href="#"
-          className={`nav-item ${currentPage === item.id ? "active" : ""}`}
-          onClick={(e) => {
-            e.preventDefault();
-            setPage(item.id);
-          }}
+          to={item.id}
+          className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
         >
           {item.label}
-        </a>
+        </NavLink>
       ))}
     </nav>
   );

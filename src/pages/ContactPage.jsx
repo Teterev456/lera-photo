@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const ContactPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Message transmitted successfully!");
+    alert("Ваше сообщение успешно отправлено!");
   };
 
   return (
@@ -60,20 +60,24 @@ const ContactPage = () => {
             </div>
 
             <div className="input-group">
-              <label className="meta-text">ПОЛНОЕ_ИМЯ</label>
-              <input type="text" placeholder="ENTER YOUR NAME" required />
+              <label className="meta-text">ВАШЕ_ПОЛНОЕ_ИМЯ</label>
+              <input type="text" placeholder="Введите ваше имя..." required />
             </div>
 
             <div className="input-group">
               <label className="meta-text">ВАША_ЭЛЕКТРОННАЯ_ПОЧТА</label>
-              <input type="email" placeholder="ENTER YOUR EMAIL" required />
+              <input
+                type="email"
+                placeholder="Введите вашу эл. почту..."
+                required
+              />
             </div>
 
             <div className="input-group">
               <label className="meta-text">ТИП_СЪЁМОК</label>
               <select required defaultValue="">
                 <option value="" disabled>
-                  ВЫБРАТЬ ТИП СЪЁМОК
+                  Выберите тип съёмки...
                 </option>
                 <option value="INDIVIDUAL">ИНДИВИДУАЛЬНАЯ</option>
                 <option value="COLLECTIVE">ГРУППОВАЯ</option>
@@ -85,7 +89,7 @@ const ContactPage = () => {
               <label className="meta-text">СООБЩЕНИЕ</label>
               <textarea
                 rows="5"
-                placeholder="DESCRIBE YOUR PROJECT..."
+                placeholder="Опишите ваше предложение или задайте вопрос..."
                 required
               />
             </div>

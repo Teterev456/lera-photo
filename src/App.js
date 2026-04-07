@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -10,30 +11,19 @@ import ContactPage from "./pages/ContactPage";
 import "./App.css";
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState("index");
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case "index":
-        return <IndexPage setPage={setCurrentPage} />;
-      case "archive":
-        return <ArchivePage />;
-      case "booking":
-        return <BookingPage />;
-      case "login":
-        return <LoginPage />;
-      case "contact":
-        return <ContactPage />;
-      default:
-        return <IndexPage />;
-    }
-  };
-
   return (
     <div className="site-wrapper">
-      <Header currentPage={currentPage} setPage={setCurrentPage} />
-      <main className="main-content">{renderPage()}</main>
-      <Footer setPage={setCurrentPage} />
+      <Header />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<IndexPage />} />
+          <Route path="/archive" element={<ArchivePage />} />
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   );
 };
