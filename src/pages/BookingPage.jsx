@@ -68,16 +68,12 @@ const BookingPage = () => {
           </div>
 
           {chosenType === "ГРУППОВАЯ" ? (
-            <Counter {..."КОЛИЧЕСТВО_ЛЮДЕЙ"} />
-          ) : (
-            <></>
-          )}
+            <Counter title={"КОЛИЧЕСТВО_ЛЮДЕЙ"} />
+          ) : null}
 
           {chosenType === "РЕПОРТАЖНАЯ" ? (
-            <Counter {..."ДЛИТЕЛЬНОСТЬ_СЪЁМКИ"} />
-          ) : (
-            <></>
-          )}
+            <Counter title={"ДЛИТЕЛЬНОСТЬ_СЪЁМКИ"} />
+          ) : null}
 
           <BookingCalendar />
 
