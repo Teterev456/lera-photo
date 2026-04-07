@@ -2,18 +2,17 @@ import React, { useEffect, useState } from "react";
 import indexImage from "../assets/img/index.jpg";
 import projects from "../assets/data/projects";
 import PhotoCard from "../components/PhotoCard";
+import dayjs from "dayjs";
 
 const IndexPage = ({ setPage }) => {
-  const date = new Date();
+  const date = dayjs(new Date());
+  const dateStr = date.format("DD:MM:YYYY");
 
   return (
     <div className="page-section">
       <header className="hero panel">
         <div className="hero-title-wrapper panel">
-          <div className="meta-text system-code">
-            SYS.DATE //{" "}
-            {date.getDay() + ":" + date.getMonth() + ":" + date.getFullYear()}
-          </div>
+          <div className="meta-text system-code">SYS.DATE // {dateStr}</div>
           <h1 className="display-huge">
             ИНФОРМАЦИЯ
             <br />
