@@ -786,6 +786,11 @@ nav .logo {
   cursor: pointer;
 }
 
+.booking-textarea-form {
+  width: 100%;
+  max-width: 800px;
+}
+
 .checkbox-group .meta-text {
   margin-top: 0.5rem;
   opacity: 0.5;

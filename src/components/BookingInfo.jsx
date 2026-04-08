@@ -135,7 +135,7 @@ const BookingInfo = () => {
             дополнительно
           </p>
         </div>
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form className="booking-textarea-form" onSubmit={handleSubmit}>
           <div className="input-group">
             <label
               className="meta-text"
@@ -148,6 +148,7 @@ const BookingInfo = () => {
               placeholder="Дополнительная информация к фотосессии..."
               required
               value={text}
+              style={{ minHeight: "100px", maxHeight: "218px" }}
               onChange={(e) => {
                 setText(e.target.value);
               }}
