@@ -11,6 +11,7 @@ const initialState = {
   chosenCountPeople: 2,
   chosenReportHours: 2,
   price: 0,
+  extraInfo: "",
 };
 
 const bookingSlice = createSlice({
@@ -26,26 +27,25 @@ const bookingSlice = createSlice({
     setTime(state, action) {
       state.chosenTime = action.payload;
     },
-    // Цена в тысячах рублей
     setPrice(state, action) {
       if (state.chosenType === "-") {
         state.price = 0;
       } else if (state.chosenType === "ИНДИВИДУАЛЬНАЯ") {
-        state.price = 4;
+        state.price = 4000;
       } else if (state.chosenType === "ГРУППОВАЯ") {
-        state.price = 5;
+        state.price = 5000;
         if (state.chosenCountPeople > 2) {
-          state.price += 1;
+          state.price += 1000;
           if (state.chosenCountPeople > 3) {
-            state.price += 0.5 * (state.chosenCountPeople - 3);
+            state.price += 500 * (state.chosenCountPeople - 3);
           }
         }
       } else if (state.chosenType === "РЕПОРТАЖНАЯ") {
-        state.price = 3 * state.chosenReportHours;
+        state.price = 3000 * state.chosenReportHours;
       }
 
       if (state.allPhoto === true) {
-        state.price += 1;
+        state.price += 1000;
       }
     },
     setAllPhoto(state, action) {
@@ -57,10 +57,17 @@ const bookingSlice = createSlice({
     setChosenReportHours(state, action) {
       state.chosenReportHours = action.payload;
     },
-    clearInfo(state, action) {
+    setExtraInfo(state, action) {
+      state.extraInfo = action.payload;
+    },
+    clearInfo(state) {
       state.chosenType = "-";
       state.chosenDate = "-";
       state.chosenTime = "-";
+      state.allPhoto = false;
+      state.extraInfo = "";
+      state.chosenCountPeople = 2;
+      state.chosenReportHours = 2;
     },
   },
 });
@@ -74,6 +81,7 @@ export const {
   setChosenReportHours,
   clearInfo,
   setAllPhoto,
+  setExtraInfo,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
