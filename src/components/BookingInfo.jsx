@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { createBooking, getBookings } from "../services/api";
 import {
   clearInfo,
+  formData,
   setAllPhoto,
   setExtraInfo,
   setPrice,
@@ -17,6 +20,8 @@ const BookingInfo = () => {
     price,
     chosenReportHours,
     extraInfo,
+    chosenCountPeople,
+    allPhoto,
   } = useSelector((state) => state.booking);
 
   const [includeAllPhotos, setIncludeAllPhotos] = React.useState(false);
@@ -28,25 +33,49 @@ const BookingInfo = () => {
     dispatch(setExtraInfo(text));
   }, [includeAllPhotos, text]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (chosenType != "РЕПОРТАЖНАЯ") {
-      alert(
-        `Заказ подтверждён!\nДата: ${chosenDate}\nВремя: ${chosenTime} — ${
-          parseInt(chosenTime) + 2
-        }:00\nТип фотосессии: ${chosenType}\nСтоимость: ${price} ₽\nВаше сообщение: ${extraInfo}`
-      );
-    } else {
-      alert(
-        `Заказ подтверждён!\nДата: ${chosenDate}\nВремя: ${chosenTime} — ${
-          (parseInt(chosenTime) + chosenReportHours) % 24
-        }:00\nТип фотосессии: ${chosenType}\nСтоимость: ${price} ₽\nВаше сообщение: ${extraInfo}`
-      );
+  const handleSubmit = async (e) => {
+    try {
+      const data = {
+        name: "Admin",
+        phone: "+79999999999",
+
+        chosenType: chosenType,
+        chosenDate: chosenDate,
+        chosenTime: chosenTime,
+        allPhoto: allPhoto,
+        chosenCountPeople: chosenCountPeople,
+        chosenReportHours: chosenReportHours,
+        price: price,
+        extraInfo: extraInfo,
+      };
+
+      e.preventDefault();
+      if (chosenType != "РЕПОРТАЖНАЯ") {
+        alert(
+          `Заказ подтверждён!\nДата: ${chosenDate}\nВремя: ${chosenTime} — ${
+            parseInt(chosenTime) + 2
+          }:00\nТип фотосессии: ${chosenType}\nСтоимость: ${price} ₽\nВаше сообщение: ${extraInfo}`
+        );
+      } else {
+        alert(
+          `Заказ подтверждён!\nДата: ${chosenDate}\nВремя: ${chosenTime} — ${
+            (parseInt(chosenTime) + chosenReportHours) % 24
+          }:00\nТип фотосессии: ${chosenType}\nСтоимость: ${price} ₽\nВаше сообщение: ${extraInfo}`
+        );
+      }
+      const response = await createBooking(data);
+      console.log(response);
+
+      const answer = await getBookings();
+      console.log(answer);
+
+      dispatch(clearInfo());
+      setText("");
+      setIncludeAllPhotos(false);
+      dispatch(setPrice());
+    } catch (error) {
+      console.error("Ошибка:", error);
     }
-    dispatch(clearInfo());
-    setText("");
-    setIncludeAllPhotos(false);
-    dispatch(setPrice());
   };
 
   return (
