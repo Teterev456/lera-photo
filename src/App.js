@@ -9,6 +9,7 @@ import BookingPage from "./pages/BookingPage";
 import LoginPage from "./pages/LoginPage";
 import ContactPage from "./pages/ContactPage";
 import "./App.css";
+import ToastContainer from "./components/Toasts/ToastContainer";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
+      <ToastContainer />;
       <Footer />
     </div>
   );

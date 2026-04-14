@@ -1,12 +1,89 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/slices/authorizationSlice";
+import { login, register } from "../services/api";
+import { addToast } from "../redux/slices/toastSlice";
+import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "../services/api";
 
 const LoginPage = () => {
-  const [activeTab, setActiveTab] = useState("ВХОД");
-  const [repeatPass, setRepeatPassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [activeTab, setActiveTab] = React.useState("ВХОД");
+  const [username1, setUsername1] = React.useState("");
+  const [email1, setEmail1] = React.useState("");
+  const [password1, setPassword1] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
+  const [repeatPass, setRepeatPassword] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Вход выполнен успешно!");
+    setIsLoading(true);
+
+    if (repeatPass && password1 !== password2) {
+      dispatch(
+        addToast({
+          type: "error",
+          errorMessage: "Пароли не совпадают",
+          errorCode: "PASSWORD_MISMATCH",
+        })
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      if (repeatPass) {
+        await register({
+          username: username1,
+          password: password1,
+          email: email1,
+        });
+
+        await login({ username: username1, password: password1 });
+
+        const userResponse = await getCurrentUser();
+        dispatch(setUser(userResponse.data));
+
+        setEmail1("");
+        setUsername1("");
+        setPassword1("");
+        setPassword2("");
+
+        navigate("/");
+      } else {
+        await login({ username: username1, password: password1 });
+
+        const userResponse = await getCurrentUser();
+        dispatch(setUser(userResponse.data));
+
+        setUsername1("");
+        setPassword1("");
+
+        navigate("/");
+      }
+    } catch (error) {
+      let errorMessage = "Неизвестная ошибка";
+      if (error.response) {
+        errorMessage = error.response.data?.detail || error.response.statusText;
+      } else if (error.request) {
+        errorMessage = "Нет ответа от сервера. Проверьте подключение.";
+      } else {
+        errorMessage = error.message;
+      }
+
+      dispatch(
+        addToast({
+          type: "error",
+          errorMessage: errorMessage,
+          errorCode: error.response?.status || "ERROR",
+        })
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -45,7 +122,7 @@ const LoginPage = () => {
                   type="button"
                   onClick={() => {
                     setActiveTab(tab);
-                    setRepeatPassword(!repeatPass);
+                    setRepeatPassword(tab === "РЕГИСТРАЦИЯ");
                   }}
                 >
                   {tab}
@@ -55,21 +132,63 @@ const LoginPage = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="input-group">
-                <label className="meta-text">ЭЛЕКТРОННАЯ_ПОЧТА</label>
-                <input type="email" placeholder="client@example.com" required />
+                <label className="meta-text">ЛОГИН</label>
+                <input
+                  type="text"
+                  placeholder="Client"
+                  required
+                  value={username1}
+                  onChange={(e) => setUsername1(e.target.value)}
+                />
               </div>
+
+              {repeatPass && (
+                <div className="input-group">
+                  <label className="meta-text">ЭЛЕКТРОННАЯ_ПОЧТА</label>
+                  <input
+                    type="email"
+                    placeholder="client@example.com"
+                    required
+                    value={email1}
+                    onChange={(e) => setEmail1(e.target.value)}
+                  />
+                </div>
+              )}
+
               <div className="input-group">
                 <label className="meta-text">ПАРОЛЬ</label>
-                <input type="password" placeholder="••••••••" required />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  value={password1}
+                  onChange={(e) => setPassword1(e.target.value)}
+                />
               </div>
-              {repeatPass === true ? (
+
+              {repeatPass && (
                 <div className="input-group">
                   <label className="meta-text">ПОВТОРИТЕ ПАРОЛЬ</label>
-                  <input type="password" placeholder="••••••••" required />
+                  <input
+                    type="password"
+                    placeholder="••••••••"
+                    required
+                    value={password2}
+                    onChange={(e) => setPassword2(e.target.value)}
+                  />
                 </div>
-              ) : null}
-              <button type="submit" className="login-submit">
-                ВХОД →
+              )}
+
+              <button
+                type="submit"
+                className="login-submit"
+                disabled={isLoading}
+              >
+                {isLoading
+                  ? "ЗАГРУЗКА..."
+                  : repeatPass
+                  ? "РЕГИСТРАЦИЯ →"
+                  : "ВХОД →"}
               </button>
             </form>
           </div>

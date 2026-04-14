@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { createBooking, getBookings } from "../services/api";
 import {
   clearInfo,
-  formData,
   setAllPhoto,
   setExtraInfo,
   setPrice,
 } from "../redux/slices/bookingSlice";
+import { user } from "../redux/slices/authorizationSlice";
+import { addToast } from "../redux/slices/toastSlice";
 
 const BookingInfo = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const BookingInfo = () => {
     allPhoto,
   } = useSelector((state) => state.booking);
 
+  const user = useSelector((state) => state.authorization.user);
+
   const [includeAllPhotos, setIncludeAllPhotos] = React.useState(false);
   const [text, setText] = React.useState();
 
@@ -35,9 +38,11 @@ const BookingInfo = () => {
 
   const handleSubmit = async (e) => {
     try {
+      e.preventDefault();
+
       const data = {
-        name: "Admin",
-        phone: "+79999999999",
+        name: user.username,
+        email: user.email,
 
         chosenType: chosenType,
         chosenDate: chosenDate,
@@ -49,32 +54,25 @@ const BookingInfo = () => {
         extraInfo: extraInfo,
       };
 
-      e.preventDefault();
-      if (chosenType != "РЕПОРТАЖНАЯ") {
-        alert(
-          `Заказ подтверждён!\nДата: ${chosenDate}\nВремя: ${chosenTime} — ${
-            parseInt(chosenTime) + 2
-          }:00\nТип фотосессии: ${chosenType}\nСтоимость: ${price} ₽\nВаше сообщение: ${extraInfo}`
-        );
-      } else {
-        alert(
-          `Заказ подтверждён!\nДата: ${chosenDate}\nВремя: ${chosenTime} — ${
-            (parseInt(chosenTime) + chosenReportHours) % 24
-          }:00\nТип фотосессии: ${chosenType}\nСтоимость: ${price} ₽\nВаше сообщение: ${extraInfo}`
-        );
-      }
       const response = await createBooking(data);
-      console.log(response);
 
-      const answer = await getBookings();
-      console.log(answer);
+      const bookingId = response.data?.id || response.id || "LR-92104";
 
+      dispatch(addToast({ type: "booking", bookingId }));
       dispatch(clearInfo());
       setText("");
       setIncludeAllPhotos(false);
       dispatch(setPrice());
     } catch (error) {
-      console.error("Ошибка:", error);
+      let errorMessage = "Неизвестная ошибка";
+      if (error.response) {
+        errorMessage = error.response.data?.detail || error.response.statusText;
+      } else if (error.request) {
+        errorMessage = "Нет ответа от сервера. Проверьте подключение.";
+      } else {
+        errorMessage = error.message;
+      }
+      dispatch(addToast({ type: "error", errorMessage }));
     }
   };
 
@@ -197,7 +195,6 @@ const BookingInfo = () => {
           </div>
         </form>
       </div>
-
       <div
         className="meta-text"
         style={{
