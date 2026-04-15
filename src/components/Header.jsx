@@ -1,8 +1,9 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
 import { useUser } from "../hooks/useUser";
-import { logout as logoutAction } from "../redux/slices/authorizationSlice";
+import { logout } from "../redux/slices/authorizationSlice";
 import { addToast } from "../redux/slices/toastSlice";
 import api from "../services/api";
 
@@ -15,7 +16,7 @@ const Header = () => {
     e.preventDefault();
     try {
       await api.post("/logout/", {});
-      dispatch(logoutAction());
+      dispatch(logout());
       navigate("/login");
     } catch (error) {
       console.error("Ошибка выхода:", error);
@@ -62,7 +63,7 @@ const Header = () => {
       {!loading && user && (
         <>
           <span className="nav-item user-name">{user.username}</span>
-          <NavLink to="#" className="nav-item" onClick={handleLogout}>
+          <NavLink to="#" className="nav-item exit" onClick={handleLogout}>
             ВЫЙТИ
           </NavLink>
         </>

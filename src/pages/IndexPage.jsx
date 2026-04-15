@@ -1,9 +1,10 @@
 import React from "react";
+import dayjs from "dayjs";
+import { Link } from "react-router-dom";
+
 import indexImage from "../assets/img/index.jpg";
 import projects from "../assets/data/projects";
 import PhotoCard from "../components/PhotoCard";
-import dayjs from "dayjs";
-import { Link } from "react-router-dom";
 
 const IndexPage = () => {
   const date = dayjs(new Date());

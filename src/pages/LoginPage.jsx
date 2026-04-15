@@ -1,9 +1,10 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { setUser } from "../redux/slices/authorizationSlice";
 import { login, register } from "../services/api";
 import { addToast } from "../redux/slices/toastSlice";
-import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../services/api";
 
 const LoginPage = () => {
@@ -11,12 +12,19 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = React.useState("ВХОД");
-  const [username1, setUsername1] = React.useState("");
-  const [email1, setEmail1] = React.useState("");
+  const [username1, setUsername] = React.useState("");
+  const [email1, setEmail] = React.useState("");
   const [password1, setPassword1] = React.useState("");
   const [password2, setPassword2] = React.useState("");
   const [repeatPass, setRepeatPassword] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    setUsername("");
+    setEmail("");
+    setPassword1("");
+    setPassword2("");
+  }, [activeTab]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,8 +55,8 @@ const LoginPage = () => {
         const userResponse = await getCurrentUser();
         dispatch(setUser(userResponse.data));
 
-        setEmail1("");
-        setUsername1("");
+        setEmail("");
+        setUsername("");
         setPassword1("");
         setPassword2("");
 
@@ -59,7 +67,7 @@ const LoginPage = () => {
         const userResponse = await getCurrentUser();
         dispatch(setUser(userResponse.data));
 
-        setUsername1("");
+        setUsername("");
         setPassword1("");
 
         navigate("/");
@@ -120,6 +128,7 @@ const LoginPage = () => {
                   key={tab}
                   className={`login-tab ${activeTab === tab ? "active" : ""}`}
                   type="button"
+                  style={{ fontSize: "20px" }}
                   onClick={() => {
                     setActiveTab(tab);
                     setRepeatPassword(tab === "РЕГИСТРАЦИЯ");
@@ -138,7 +147,7 @@ const LoginPage = () => {
                   placeholder="Client"
                   required
                   value={username1}
-                  onChange={(e) => setUsername1(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
 
@@ -150,7 +159,7 @@ const LoginPage = () => {
                     placeholder="client@example.com"
                     required
                     value={email1}
-                    onChange={(e) => setEmail1(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               )}

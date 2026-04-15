@@ -1,9 +1,10 @@
 import React from "react";
-import BookingCalendar from "../components/BookingCalendar";
-import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+
 import { setPrice, setTime, setType } from "../redux/slices/bookingSlice";
+import BookingCalendar from "../components/BookingCalendar";
+import Counter from "../components/Counter";
 import BookingInfo from "../components/BookingInfo";
 
 const BookingPage = () => {

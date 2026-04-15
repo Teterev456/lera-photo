@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   setPrice,
   setChosenCountPeople,
@@ -19,12 +20,12 @@ const Counter = ({ title }) => {
 
   React.useEffect(() => {
     dispatch(setPrice());
-  }, [chosenCountPeople, chosenReportHours]);
+  }, [chosenCountPeople, chosenReportHours, dispatch]);
 
   React.useEffect(() => {
     dispatch(setChosenCountPeople(2));
     dispatch(setChosenReportHours(2));
-  }, []);
+  }, [dispatch]);
 
   const decrement = () => {
     if (count > minCount) {
