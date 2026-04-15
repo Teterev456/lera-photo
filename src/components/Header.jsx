@@ -32,7 +32,6 @@ const Header = () => {
   const navItems = [
     { id: "/", label: "ГЛАВНАЯ" },
     { id: "/archive", label: "ПОРТФОЛИО" },
-    { id: "/booking", label: "ОФОРМИТЬ ЗАЯВКУ" },
     { id: "/contact", label: "КОНТАКТЫ" },
   ];
 
@@ -54,7 +53,15 @@ const Header = () => {
 
       {!loading && user && (
         <>
-          <span className="nav-item user-name">👤 {user.username}</span>
+          <NavLink to="/booking" className="nav-item">
+            ОФОРМИТЬ ЗАЯВКУ
+          </NavLink>
+        </>
+      )}
+
+      {!loading && user && (
+        <>
+          <span className="nav-item user-name">{user.username}</span>
           <NavLink to="#" className="nav-item" onClick={handleLogout}>
             ВЫЙТИ
           </NavLink>

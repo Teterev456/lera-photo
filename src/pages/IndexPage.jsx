@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import indexImage from "../assets/img/index.jpg";
 import projects from "../assets/data/projects";
 import PhotoCard from "../components/PhotoCard";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
-const IndexPage = ({ setPage }) => {
+const IndexPage = () => {
   const date = dayjs(new Date());
   const dateStr = date.format("DD:MM:YYYY");
 
@@ -13,7 +14,10 @@ const IndexPage = ({ setPage }) => {
       <header className="hero panel">
         <div className="hero-title-wrapper panel">
           <div className="meta-text system-code">SYS.DATE // {dateStr}</div>
-          <h1 className="display-huge">
+          <h1
+            className="display-huge"
+            style={{ fontSize: "clamp(4rem, 9vw, 9rem)" }}
+          >
             ИНФОРМАЦИЯ
             <br />
             ОБО МНЕ
@@ -72,17 +76,13 @@ const IndexPage = ({ setPage }) => {
 
       <section className="panel portfolio-header">
         <h2 className="display-medium overline">ПРИМЕРЫ РАБОТ</h2>
-        <a
-          href="#"
+        <Link
+          to="/archive"
           className="meta-text"
           style={{ color: "var(--blue)", textDecoration: "none" }}
-          onClick={(e) => {
-            e.preventDefault();
-            setPage("archive");
-          }}
         >
           ПОСМОТРЕТЬ_ВСЕ_РАБОТЫ ↗
-        </a>
+        </Link>
       </section>
 
       <section className="featured-grid">

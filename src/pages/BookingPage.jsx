@@ -2,20 +2,26 @@ import React from "react";
 import BookingCalendar from "../components/BookingCalendar";
 import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { setPrice, setTime, setType } from "../redux/slices/bookingSlice";
 import BookingInfo from "../components/BookingInfo";
 
 const BookingPage = () => {
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.authorization);
   const { chosenType, chosenTime, sessionTypes, timeSlots } = useSelector(
     (state) => state.booking
   );
 
+  if (!user) {
+    return <Navigate to="/*" replace />;
+  }
+
   return (
     <div className="page-section">
       <div className="panel portfolio-header">
-        <h2 className="display-medium overline">БРОНЬ_ФОТОСЕССИИ</h2>
+        <h2 className="display-medium overline">БРОНЬ ФОТОСЕССИИ</h2>
         <div className="meta-text">ВЫБЕРИТЕ ДАТУ И ТИП_СЪЁМКИ</div>
       </div>
 
