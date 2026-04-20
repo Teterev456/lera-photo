@@ -1035,6 +1035,253 @@ nav .logo {
     padding-bottom: 0.25rem;
 }
 
+/* User Profile Page specific styles */
+.content-container-profile {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  gap: var(--grid-gap);
+  overflow: hidden;
+}
+
+.section-left {
+  background-color: var(--blue);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 3.5rem 4rem;
+  position: relative;
+}
+
+.section-right {
+  background-color: var(--white);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--grid-gap);
+  overflow-y: auto;
+}
+
+/* Profile form */
+.profile-form-group {
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 0.5rem;
+}
+
+.profile-form-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.profile-form-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 700;
+  outline: none;
+  text-transform: uppercase;
+}
+
+.profile-form-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.save-btn {
+  background-color: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 1.5rem 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: fit-content;
+  margin-top: 2rem;
+  transition: all 0.2s;
+}
+
+.save-btn:hover {
+  background-color: var(--white);
+  color: var(--blue);
+}
+
+/* Bookings panel */
+.bookings-pane {
+  padding: 3.5rem 4rem;
+}
+
+.section-label {
+  color: var(--blue);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.section-title {
+  font-weight: 900;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.booking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.booking-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.booking-list::-webkit-scrollbar-track {
+  background: var(--gray);
+}
+
+.booking-list::-webkit-scrollbar-thumb {
+  background: var(--black);
+}
+
+.booked-item {
+  background-color: var(--white);
+  border: 2px solid var(--black);
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: start;
+  padding: 1.5rem;
+}
+
+.booked-content {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.booked-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--black);
+  text-transform: uppercase;
+}
+
+.status-active {
+  background-color: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+
+.chat-section {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--gray);
+  padding-top: 1rem;
+}
+
+.chat-history {
+  max-height: 120px;
+  overflow-y: auto;
+  margin-bottom: 0.75rem;
+  padding-right: 0.5rem;
+}
+
+.chat-history::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-history::-webkit-scrollbar-track {
+  background: var(--gray);
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  background: var(--blue);
+}
+
+.chat-message {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--gray);
+}
+
+.chat-message:last-child {
+  border-bottom: none;
+}
+
+.chat-meta {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.chat-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-input {
+  flex-grow: 1;
+  border: 1px solid var(--black);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: var(--blue);
+}
+
+.send-btn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: var(--blue);
+}
+
+/* Small meta text variant */
+.meta-text-sm {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .content-container-profile {
+    grid-template-columns: 1fr;
+  }
+  .section-left {
+    min-height: auto;
+  }
+}
+
 @media (max-width: 1024px) {
     .error-container {
         grid-template-columns: 1fr;

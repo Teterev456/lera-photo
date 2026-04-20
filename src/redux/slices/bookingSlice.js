@@ -1,10 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import { getBookingTypes } from "../../services/api";
 
 const initialState = {
-  sessionTypes: ["ИНДИВИДУАЛЬНАЯ", "ГРУППОВАЯ", "РЕПОРТАЖНАЯ"],
+  sessionTypes: [],
+  loading: false,
   timeSlots: ["9:00", "13:00", "17:00", "20:00"],
 
-  chosenType: "-",
+  chosenTypeId: 0,
   chosenDate: "-",
   chosenTime: "-",
   allPhoto: false,
@@ -19,7 +22,7 @@ const bookingSlice = createSlice({
   initialState,
   reducers: {
     setType(state, action) {
-      state.chosenType = action.payload;
+      state.chosenTypeId = action.payload;
     },
     setDate(state, action) {
       state.chosenDate = action.payload;
@@ -28,11 +31,11 @@ const bookingSlice = createSlice({
       state.chosenTime = action.payload;
     },
     setPrice(state, action) {
-      if (state.chosenType === "-") {
+      if (state.chosenTypeId === 0) {
         state.price = 0;
-      } else if (state.chosenType === "ИНДИВИДУАЛЬНАЯ") {
+      } else if (state.chosenTypeId === 1) {
         state.price = 4000;
-      } else if (state.chosenType === "ГРУППОВАЯ") {
+      } else if (state.chosenTypeId === 2) {
         state.price = 5000;
         if (state.chosenCountPeople > 2) {
           state.price += 1000;
@@ -40,7 +43,7 @@ const bookingSlice = createSlice({
             state.price += 500 * (state.chosenCountPeople - 3);
           }
         }
-      } else if (state.chosenType === "РЕПОРТАЖНАЯ") {
+      } else if (state.chosenTypeId === 3) {
         state.price = 3000 * state.chosenReportHours;
       }
 
@@ -61,7 +64,7 @@ const bookingSlice = createSlice({
       state.extraInfo = action.payload;
     },
     clearInfo(state) {
-      state.chosenType = "-";
+      state.chosenTypeId = "-";
       state.chosenDate = "-";
       state.chosenTime = "-";
       state.allPhoto = false;
@@ -70,7 +73,30 @@ const bookingSlice = createSlice({
       state.chosenReportHours = 2;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCategories.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.sessionTypes = action.payload;
+        state.loading = false;
+      });
+  },
 });
+
+export const fetchCategories = createAsyncThunk(
+  "categories/fetch",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getBookingTypes();
+      return response.data;
+    } catch (error) {
+      console.error("Ошибка загрузки категорий:", error);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
 export const {
   setType,

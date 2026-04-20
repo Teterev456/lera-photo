@@ -1,21 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createBooking, getBookings } from "../services/api";
+import { createBooking } from "../services/api";
 import {
   clearInfo,
   setAllPhoto,
   setExtraInfo,
   setPrice,
 } from "../redux/slices/bookingSlice";
-import { user } from "../redux/slices/authorizationSlice";
 import { addToast } from "../redux/slices/toastSlice";
 
 const BookingInfo = () => {
   const dispatch = useDispatch();
 
   const {
-    chosenType,
+    chosenTypeId,
     chosenDate,
     chosenTime,
     price,
@@ -25,7 +24,7 @@ const BookingInfo = () => {
     allPhoto,
   } = useSelector((state) => state.booking);
 
-  const user = useSelector((state) => state.authorization.user);
+  const user = useSelector((state) => state.authorization.user.id);
 
   const [includeAllPhotos, setIncludeAllPhotos] = React.useState(false);
   const [text, setText] = React.useState();
@@ -34,26 +33,23 @@ const BookingInfo = () => {
     dispatch(setAllPhoto(includeAllPhotos));
     dispatch(setPrice());
     dispatch(setExtraInfo(text));
-  }, [includeAllPhotos, text]);
+  }, [includeAllPhotos, text, dispatch]);
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
 
       const data = {
-        name: user.username,
-        email: user.email,
-
-        chosenType: chosenType,
-        chosenDate: chosenDate,
-        chosenTime: chosenTime,
-        allPhoto: allPhoto,
-        chosenCountPeople: chosenCountPeople,
-        chosenReportHours: chosenReportHours,
+        user: user,
+        type: chosenTypeId,
+        chosen_date: chosenDate,
+        chosen_time: chosenTime,
+        all_photo: allPhoto,
+        chosen_count_people: chosenCountPeople,
+        chosen_report_hours: chosenReportHours,
         price: price,
-        extraInfo: extraInfo,
+        extra_info: extraInfo,
       };
-
       const response = await createBooking(data);
 
       const bookingId = response.data?.id || response.id || "LR-92104";
@@ -102,9 +98,7 @@ const BookingInfo = () => {
           <span className="meta-text info-label">ВРЕМЯ</span>
           <p className="info-text">
             {(chosenTime === "-" ? "-" : null) ||
-              (chosenReportHours > 2 &&
-              chosenTime !== "-" &&
-              chosenType === "РЕПОРТАЖНАЯ"
+              (chosenReportHours > 2 && chosenTime !== "-" && chosenTypeId === 3
                 ? `${chosenTime} — ${
                     (parseInt(chosenTime) + chosenReportHours) % 24
                   }:00`
@@ -114,7 +108,7 @@ const BookingInfo = () => {
         <div className="info-block">
           <span className="meta-text info-label">ТИП</span>
           <p className="info-text">
-            {chosenType === "-" ? "-" : `${chosenType} СЪЁМКА`}{" "}
+            {chosenTypeId === 0 ? "-" : `${chosenTypeId} СЪЁМКА`}{" "}
           </p>
         </div>
         <div className="info-block">
@@ -185,7 +179,7 @@ const BookingInfo = () => {
               className="book-btn"
               style={{ marginTop: "2rem" }}
               disabled={
-                chosenType === "-" || chosenDate === "-" || chosenTime === "-"
+                chosenTypeId === 0 || chosenDate === "-" || chosenTime === "-"
                   ? true
                   : false
               }

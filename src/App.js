@@ -11,6 +11,7 @@ import ContactPage from "./pages/ContactPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ToastContainer from "./components/Toasts/ToastContainer";
 import "./App.css";
+import UserProfilePage from "./pages/UserProfilePage";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/profile" element={<UserProfilePage />} />
 
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>

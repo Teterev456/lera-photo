@@ -2,7 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import { setPrice, setTime, setType } from "../redux/slices/bookingSlice";
+import {
+  fetchCategories,
+  setPrice,
+  setTime,
+  setType,
+} from "../redux/slices/bookingSlice";
 import BookingCalendar from "../components/BookingCalendar";
 import Counter from "../components/Counter";
 import BookingInfo from "../components/BookingInfo";
@@ -11,12 +16,19 @@ const BookingPage = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.authorization);
-  const { chosenType, chosenTime, sessionTypes, timeSlots } = useSelector(
-    (state) => state.booking
-  );
+  const { sessionTypes, chosenTypeId, loading, chosenTime, timeSlots } =
+    useSelector((state) => state.booking);
+
+  React.useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div className="page-section">Загрузка типов съёмки...</div>;
+  }
 
   if (!user) {
-    return <Navigate to="/*" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return (
@@ -38,22 +50,27 @@ const BookingPage = () => {
           <div className="form-group">
             <label className="meta-text">ТИП_СЪЁМОК</label>
             <div className="session-options">
-              {sessionTypes.map((type) => (
-                <button
-                  key={type}
-                  className={`session-btn ${
-                    chosenType === type ? "active" : ""
-                  }`}
-                  type="button"
-                  onClick={() => {
-                    dispatch(setType(type));
-                    dispatch(setPrice());
-                  }}
-                >
-                  {type}
-                </button>
-              ))}
+              {sessionTypes && sessionTypes.length > 0 ? (
+                sessionTypes.map((type) => (
+                  <button
+                    key={type.id}
+                    className={`session-btn ${
+                      chosenTypeId === type.id ? "active" : ""
+                    }`}
+                    type="button"
+                    onClick={() => {
+                      dispatch(setType(type.id));
+                      dispatch(setPrice());
+                    }}
+                  >
+                    {type.title}
+                  </button>
+                ))
+              ) : (
+                <div>Нет доступных категорий</div>
+              )}
             </div>
+
             <div
               className="meta-text"
               style={{ opacity: 0.5, fontSize: "0.9rem", marginTop: 15 }}
@@ -62,11 +79,9 @@ const BookingPage = () => {
             </div>
           </div>
 
-          {chosenType === "ГРУППОВАЯ" ? (
-            <Counter title={"КОЛИЧЕСТВО_ЛЮДЕЙ"} />
-          ) : null}
+          {chosenTypeId === 2 ? <Counter title={"КОЛИЧЕСТВО_ЛЮДЕЙ"} /> : null}
 
-          {chosenType === "РЕПОРТАЖНАЯ" ? (
+          {chosenTypeId === 3 ? (
             <Counter title={"ДЛИТЕЛЬНОСТЬ_СЪЁМОК_В_ЧАСАХ"} />
           ) : null}
 

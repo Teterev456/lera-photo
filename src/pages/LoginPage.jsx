@@ -1,6 +1,7 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { setUser } from "../redux/slices/authorizationSlice";
 import { login, register } from "../services/api";
@@ -19,12 +20,18 @@ const LoginPage = () => {
   const [repeatPass, setRepeatPassword] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const { user } = useSelector((state) => state.authorization);
+
   React.useEffect(() => {
     setUsername("");
     setEmail("");
     setPassword1("");
     setPassword2("");
   }, [activeTab]);
+
+  if (user) {
+    return <Navigate to="/profile" replace />;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

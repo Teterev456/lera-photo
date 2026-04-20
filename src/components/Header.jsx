@@ -57,12 +57,9 @@ const Header = () => {
           <NavLink to="/booking" className="nav-item">
             ОФОРМИТЬ ЗАЯВКУ
           </NavLink>
-        </>
-      )}
-
-      {!loading && user && (
-        <>
-          <span className="nav-item user-name">{user.username}</span>
+          <NavLink to="/profile" className="nav-item">
+            {user.username}
+          </NavLink>
           <NavLink to="#" className="nav-item exit" onClick={handleLogout}>
             ВЫЙТИ
           </NavLink>
