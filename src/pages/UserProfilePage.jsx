@@ -18,7 +18,7 @@ const UserProfilePage = () => {
   }, [dispatch, user]);
 
   if (!user) {
-    return <Navigate to="/*" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   if (loading) return <div>Загрузка заказов...</div>;

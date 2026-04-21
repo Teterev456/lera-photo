@@ -60,6 +60,9 @@ const LoginPage = () => {
         await login({ username: username1, password: password1 });
 
         const userResponse = await getCurrentUser();
+        localStorage.setItem("access_token", userResponse.data.access);
+        localStorage.setItem("refresh_token", userResponse.data.refresh);
+        localStorage.setItem("user", JSON.stringify(userResponse.data.user));
         dispatch(setUser(userResponse.data));
 
         setEmail("");
@@ -72,6 +75,9 @@ const LoginPage = () => {
         await login({ username: username1, password: password1 });
 
         const userResponse = await getCurrentUser();
+        localStorage.setItem("access_token", userResponse.data.access);
+        localStorage.setItem("refresh_token", userResponse.data.refresh);
+        localStorage.setItem("user", JSON.stringify(userResponse.data.user));
         dispatch(setUser(userResponse.data));
 
         setUsername("");

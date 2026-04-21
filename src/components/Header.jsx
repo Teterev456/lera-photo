@@ -16,6 +16,9 @@ const Header = () => {
     e.preventDefault();
     try {
       await api.post("/logout/", {});
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
       dispatch(logout());
       navigate("/login");
     } catch (error) {

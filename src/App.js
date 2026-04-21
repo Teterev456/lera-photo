@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -12,8 +13,30 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ToastContainer from "./components/Toasts/ToastContainer";
 import "./App.css";
 import UserProfilePage from "./pages/UserProfilePage";
+import { setUser } from "./redux/slices/authorizationSlice";
+import { getCurrentUser } from "./services/api";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.authorization);
+
+  React.useEffect(() => {
+    const restoreUser = async () => {
+      try {
+        const response = await getCurrentUser();
+        dispatch(setUser(response.data));
+      } catch (error) {
+        console.log("Пользователь не авторизован");
+        dispatch(setUser(null));
+      }
+    };
+    restoreUser();
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Загрузка...</div>;
+  }
+
   return (
     <div className="site-wrapper">
       <Header />
