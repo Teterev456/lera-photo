@@ -1,8 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useUser } from "../hooks/useUser";
 import { logout } from "../redux/slices/authorizationSlice";
 import { addToast } from "../redux/slices/toastSlice";
 import api from "../services/api";
@@ -10,19 +9,14 @@ import api from "../services/api";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, loading } = useUser();
+  const { user, loading } = useSelector((state) => state.authorization);
 
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
       await api.post("/logout/", {});
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-      localStorage.removeItem("user");
-      dispatch(logout());
-      navigate("/login");
     } catch (error) {
-      console.error("Ошибка выхода:", error);
+      console.error("Ошибка при выходе на сервере:", error);
       dispatch(
         addToast({
           type: "error",
@@ -30,6 +24,14 @@ const Header = () => {
           errorCode: error.response?.status || "ERROR",
         })
       );
+    } finally {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+
+      dispatch(logout());
+
+      navigate("/login");
     }
   };
 

@@ -1,19 +1,23 @@
 import React from "react";
 import dayjs from "dayjs";
 import { useSelector, useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import BookedItem from "../components/BookedItem";
 import { fetchUserBookings } from "../redux/slices/profileSlice";
+import { fetchCategories } from "../redux/slices/bookingSlice";
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authorization);
   const { userBookings, loading } = useSelector((state) => state.profile);
 
+  const reversedBookings = [...userBookings].reverse();
+
   React.useEffect(() => {
     if (user) {
       dispatch(fetchUserBookings());
+      dispatch(fetchCategories());
     }
   }, [dispatch, user]);
 
@@ -90,13 +94,23 @@ const UserProfilePage = () => {
             <span className="meta-text section-label meta-text-sm">
               [ АКТИВНЫЕ_ЗАКАЗЫ ]
             </span>
-            <h2 className="section-title">ВАШИ_СЪЁМКИ</h2>
-
+            <h2 className="section-title">ВАШИ ФОТОСЕССИИ</h2>
             <div className="booking-list">
-              {userBookings.length === 0 ? (
-                <p>У вас пока нет заказов.</p>
+              {reversedBookings.length === 0 ? (
+                <div className="empty-state">
+                  <div className="empty-icon">∅</div>
+                  <p className="empty-title">НЕТ_ЗАКАЗОВ</p>
+                  <p className="empty-subtitle">
+                    В вашей истории заказов не найдено бронирований
+                  </p>
+                  <Link to="/booking" className="empty-action">
+                    ОФОРМИТЬ БРОНЬ →
+                  </Link>
+                </div>
               ) : (
-                userBookings.map((booking) => <BookedItem key={booking.id} />)
+                reversedBookings.map((booking) => (
+                  <BookedItem key={booking.id} booking={booking} />
+                ))
               )}
             </div>
           </div>

@@ -1,22 +1,63 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const BookedItem = () => {
+const BookedItem = ({ booking }) => {
+  const { sessionTypes } = useSelector((state) => state.booking);
+
+  const category = sessionTypes.find((type) => type.id === booking.type);
+  const categoryTitle = category ? category.title : "Неизвестная";
+
   return (
     <div className="booked-item">
-      <div className="booked-content">
+      <div className="order-info">
         <div>
           <p className="meta-text meta-text-sm" style={{ opacity: 0.5 }}>
-            ID: BK_2901
+            ID: {booking.id}
           </p>
-          <h3>ST. PETERSBURG // INDUSTRIAL</h3>
+          <h3>{categoryTitle} СЪЁМКА</h3>
         </div>
-        <div className="meta-text meta-text-sm">
-          12.NOV.24
-          <br />
-          14:00 GMT+3
+        <div className="booking-details">
+          <div className="detail-row">
+            <span className="detail-label">ALL_PHOTOS</span>
+            <input
+              type="checkbox"
+              className="detail-checkbox"
+              checked={booking.all_photo}
+              disabled={true}
+              style={{ cursor: "default" }}
+            />
+          </div>
+          <div className="detail-row">
+            <span className="detail-label">PEOPLE</span>
+            <span className="detail-value">
+              {booking.chosen_count_people}{" "}
+              {booking.chosen_count_people === 1 ? "PERSON" : "PERSONS"}
+            </span>
+          </div>
+          {booking.chosen_report_hours && (
+            <div className="detail-row">
+              <span className="detail-label">REPORT_HOURS</span>
+              <span className="detail-value">
+                {booking.chosen_report_hours} HOURS
+              </span>
+            </div>
+          )}
+
+          <div className="detail-row price-row">
+            <span className="detail-label">PRICE</span>
+            <span className="detail-price">{booking.price}</span>
+          </div>
         </div>
-        <div className="status-badge status-active meta-text-sm">CONFIRMED</div>
       </div>
+      <div className="meta-text meta-text-sm">
+        {booking.chosen_date}
+        <br />
+        {booking.chosen_time}
+      </div>
+      <div className="status-badge status-active meta-text-sm">
+        {booking.status}
+      </div>
+
       <div className="chat-section">
         <div className="chat-history">
           <div className="chat-message">

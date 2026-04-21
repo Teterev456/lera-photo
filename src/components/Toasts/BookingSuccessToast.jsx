@@ -15,9 +15,10 @@ const BookingSuccessToast = ({ isVisible, onClose, bookingId }) => {
       <div className="toast-icon">✓</div>
       <div className="toast-content">
         <span className="toast-meta">SYSTEM_MESSAGE // SUCCESS</span>
-        <span className="toast-title">BOOKING_CONFIRMED_OK</span>
+        <span className="toast-title">СЪЁМКА_ЗАБРОНИРОВАНА</span>
         <p className="toast-message">
-          Transaction ID: #{bookingId || "LR-92104"}
+          ID: #{bookingId || "LR-92104"} <br />
+          Ознакомиться с заявкой вы можете в профиле.
         </p>
         <button className="toast-close" onClick={onClose}>
           CLOSE[X]

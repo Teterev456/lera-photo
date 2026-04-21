@@ -13,7 +13,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ToastContainer from "./components/Toasts/ToastContainer";
 import "./App.css";
 import UserProfilePage from "./pages/UserProfilePage";
-import { setUser } from "./redux/slices/authorizationSlice";
+import { setLoading, setUser } from "./redux/slices/authorizationSlice";
 import { getCurrentUser } from "./services/api";
 
 const App = () => {
@@ -28,6 +28,8 @@ const App = () => {
       } catch (error) {
         console.log("Пользователь не авторизован");
         dispatch(setUser(null));
+      } finally {
+        dispatch(setLoading(false));
       }
     };
     restoreUser();

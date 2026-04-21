@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const publicApi = axios.create({
+  baseURL: "http://localhost:8000/api/",
+  headers: { "Content-Type": "application/json" },
+});
+
 const api = axios.create({
   baseURL: "http://localhost:8000/api/",
   withCredentials: true,
@@ -16,12 +21,13 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+export const login = (credentials) => publicApi.post("login/", credentials);
+export const register = (userData) => publicApi.post("register/", userData);
+
 export const createBooking = (data) => api.post("bookings/", data);
 export const getUserBookings = () => api.get("bookings/");
 export const getBlockedDates = () => api.get("blocked-dates/");
-export const login = (credentials) => api.post("login/", credentials);
 export const logout = () => api.post("logout/", {});
-export const register = (userData) => api.post("register/", userData);
 export const refreshToken = () => api.post("login/refresh/", {});
 export const getCurrentUser = () => api.get("/user/");
 export const getBookingTypes = () => api.get("categories/");

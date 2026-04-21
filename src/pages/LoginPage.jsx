@@ -13,8 +13,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = React.useState("ВХОД");
-  const [username1, setUsername] = React.useState("");
-  const [email1, setEmail] = React.useState("");
+  const [username1, setUsername1] = React.useState("");
+  const [email1, setEmail1] = React.useState("");
   const [password1, setPassword1] = React.useState("");
   const [password2, setPassword2] = React.useState("");
   const [repeatPass, setRepeatPassword] = React.useState(false);
@@ -23,8 +23,8 @@ const LoginPage = () => {
   const { user } = useSelector((state) => state.authorization);
 
   React.useEffect(() => {
-    setUsername("");
-    setEmail("");
+    setUsername1("");
+    setEmail1("");
     setPassword1("");
     setPassword2("");
   }, [activeTab]);
@@ -56,31 +56,38 @@ const LoginPage = () => {
           password: password1,
           email: email1,
         });
-
-        await login({ username: username1, password: password1 });
+        const loginResponse = await login({
+          username: username1,
+          password: password1,
+        });
+        localStorage.setItem("access_token", loginResponse.data.access);
+        localStorage.setItem("refresh_token", loginResponse.data.refresh);
 
         const userResponse = await getCurrentUser();
-        localStorage.setItem("access_token", userResponse.data.access);
-        localStorage.setItem("refresh_token", userResponse.data.refresh);
         localStorage.setItem("user", JSON.stringify(userResponse.data.user));
+
         dispatch(setUser(userResponse.data));
 
-        setEmail("");
-        setUsername("");
+        setEmail1("");
+        setUsername1("");
         setPassword1("");
         setPassword2("");
 
         navigate("/");
       } else {
-        await login({ username: username1, password: password1 });
+        const loginResponse = await login({
+          username: username1,
+          password: password1,
+        });
+        localStorage.setItem("access_token", loginResponse.data.access);
+        localStorage.setItem("refresh_token", loginResponse.data.refresh);
 
         const userResponse = await getCurrentUser();
-        localStorage.setItem("access_token", userResponse.data.access);
-        localStorage.setItem("refresh_token", userResponse.data.refresh);
         localStorage.setItem("user", JSON.stringify(userResponse.data.user));
+
         dispatch(setUser(userResponse.data));
 
-        setUsername("");
+        setUsername1("");
         setPassword1("");
 
         navigate("/");
@@ -160,7 +167,7 @@ const LoginPage = () => {
                   placeholder="Client"
                   required
                   value={username1}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUsername1(e.target.value)}
                 />
               </div>
 
@@ -172,7 +179,7 @@ const LoginPage = () => {
                     placeholder="client@example.com"
                     required
                     value={email1}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail1(e.target.value)}
                   />
                 </div>
               )}
