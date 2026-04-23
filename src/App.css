@@ -1385,6 +1385,7 @@ nav .logo {
   color: var(--white);
   border-color: var(--blue);
 }
+
 .status-badge.pending,
 .status-badge.upcoming {
   border: 1px solid var(--gray-dark);
@@ -1398,6 +1399,62 @@ nav .logo {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+/* Chat Thread */
+.chat-thread {
+  border-top: 1px solid var(--gray);
+  padding: 1.5rem 2rem;
+}
+
+.messages-container {
+  max-height: 120px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding-right: 0.5rem;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: var(--gray);
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: var(--blue);
+}
+
+.message {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--gray);
+  color: var(--black);
+}
+
+.message:last-child {
+  border-bottom: none;
+}
+
+.message-author {
+  color: var(--blue);
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.extra-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--gray);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: #444;
+  font-style: italic;
+  border-left: 3px solid var(--blue);
+  word-break: break-word;
+  white-space: normal;
 }
 
 /* Small meta text variant */

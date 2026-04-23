@@ -4,7 +4,8 @@ import booking from "./slices/bookingSlice";
 import authorization from "./slices/authorizationSlice";
 import toast from "./slices/toastSlice";
 import profile from "./slices/profileSlice";
+import chat from "./slices/chatSlice";
 
 export const store = configureStore({
-  reducer: { booking, authorization, toast, profile },
+  reducer: { booking, authorization, toast, profile, chat },
 });

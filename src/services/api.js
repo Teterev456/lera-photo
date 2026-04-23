@@ -31,5 +31,9 @@ export const logout = () => api.post("logout/", {});
 export const refreshToken = () => api.post("login/refresh/", {});
 export const getCurrentUser = () => api.get("/user/");
 export const getBookingTypes = () => api.get("categories/");
+export const getBookingMessages = (bookingId) =>
+  api.get(`/bookings/${bookingId}/messages/`);
+export const sendBookingMessage = (bookingId, text) =>
+  api.post(`/bookings/${bookingId}/messages/`, { text });
 
 export default api;
