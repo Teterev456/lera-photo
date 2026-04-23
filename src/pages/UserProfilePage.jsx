@@ -6,13 +6,25 @@ import { Link, Navigate } from "react-router-dom";
 import BookedItem from "../components/BookedItem";
 import { fetchUserBookings } from "../redux/slices/profileSlice";
 import { fetchCategories } from "../redux/slices/bookingSlice";
+import { setUser } from "../redux/slices/authorizationSlice";
+import { addToast } from "../redux/slices/toastSlice";
+import { updateUserProfile } from "../services/api";
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authorization);
   const { userBookings, loading } = useSelector((state) => state.profile);
 
-  const reversedBookings = [...userBookings].reverse();
+  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [isSaving, setIsSaving] = React.useState(false);
+
+  React.useEffect(() => {
+    if (user) {
+      setUsername(user.username || "");
+      setEmail(user.email || "");
+    }
+  }, [user]);
 
   React.useEffect(() => {
     if (user) {
@@ -20,6 +32,35 @@ const UserProfilePage = () => {
       dispatch(fetchCategories());
     }
   }, [dispatch, user]);
+
+  const reversedBookings = [...userBookings].reverse();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+    try {
+      const response = await updateUserProfile({ username, email });
+      dispatch(setUser(response.data));
+      dispatch(
+        addToast({
+          type: "booking",
+          bookingId: "PROFILE_UPDATED",
+          errorMessage: "Профиль успешно обновлён",
+        })
+      );
+    } catch (error) {
+      console.error("Ошибка обновления:", error);
+      dispatch(
+        addToast({
+          type: "error",
+          errorMessage: error.response?.data?.detail || "Ошибка обновления",
+          errorCode: error.response?.status,
+        })
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -49,18 +90,20 @@ const UserProfilePage = () => {
             КЛИЕНТА
           </h1>
 
-          <form style={{ maxWidth: 400 }}>
+          <form
+            onSubmit={handleSubmit}
+            style={{ maxWidth: 400, marginTop: "25px" }}
+          >
             <div className="profile-form-group">
-              <label
-                className="profile-form-label meta-text-sm"
-                style={{ marginTop: "25px" }}
-              >
+              <label className="profile-form-label meta-text-sm">
                 01_ИМЯ_ПОЛЬЗОВАТЕЛЯ
               </label>
               <input
                 type="text"
                 className="profile-form-input"
-                defaultValue="ALEXANDER VORONOV"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
               />
             </div>
             <div className="profile-form-group">
@@ -70,21 +113,13 @@ const UserProfilePage = () => {
               <input
                 type="email"
                 className="profile-form-input"
-                defaultValue="A.VORONOV@SYSTEM.NET"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
-            <div className="profile-form-group">
-              <label className="profile-form-label meta-text-sm">
-                03_НОМЕР_ТЕЛЕФОНА
-              </label>
-              <input
-                type="text"
-                className="profile-form-input"
-                defaultValue="+7 999 034-12-89"
-              />
-            </div>
-            <button type="submit" className="save-btn">
-              СОХРАНИТЬ
+            <button type="submit" className="save-btn" disabled={isSaving}>
+              {isSaving ? "СОХРАНЕНИЕ..." : "СОХРАНИТЬ"}
             </button>
           </form>
         </section>

@@ -11,7 +11,7 @@ const ArchivePage = () => {
         <div className="meta-text">
           КОЛИЧЕСТВО_РАБОТ:
           {projects.map((project) =>
-            projects.length == project.id + 1 ? project.id + 1 : ""
+            projects.length === project.id + 1 ? project.id + 1 : ""
           )}
         </div>
       </div>
