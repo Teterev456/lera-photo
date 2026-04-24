@@ -24,7 +24,7 @@ const Footer = () => {
         </a>
         <p>+7 (911) 366-80-71</p>
       </div>
-      <div className="footer-copy meta-text">© 2026 Лера | Фото в Пскове.</div>
+      <div className="footer-copy meta-text">© 2026 Лера | Фото в Пскове</div>
     </footer>
   );
 };

@@ -34,7 +34,9 @@ const BookingPage = () => {
   return (
     <div className="page-section">
       <div className="panel portfolio-header">
-        <h2 className="display-medium overline">БРОНЬ ФОТОСЕССИИ</h2>
+        <h2 className="display-medium overline" style={{ lineHeight: "70px" }}>
+          БРОНЬ ФОТОСЕССИИ
+        </h2>
         <div className="meta-text">ВЫБЕРИТЕ ДАТУ И ТИП_СЪЁМКИ</div>
       </div>
 

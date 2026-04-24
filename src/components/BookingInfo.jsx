@@ -54,7 +54,15 @@ const BookingInfo = () => {
 
       const bookingId = response.data?.id || response.id || "LR-92104";
 
-      dispatch(addToast({ type: "booking", bookingId }));
+      dispatch(
+        addToast({
+          type: "booking",
+          bookingId,
+          message: "Съёмки успешно забронированы",
+          extraMessage:
+            "Ознакомиться с заявкой и отслеживать её статус можно в вашем личном кабинете.",
+        })
+      );
       dispatch(clearInfo());
       setText("");
       setIncludeAllPhotos(false);

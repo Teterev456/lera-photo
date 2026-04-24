@@ -1,6 +1,12 @@
 import React from "react";
 
-const BookingSuccessToast = ({ isVisible, onClose, bookingId }) => {
+const SuccessToast = ({
+  isVisible,
+  onClose,
+  bookingId,
+  message,
+  extraMessage,
+}) => {
   React.useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
@@ -15,10 +21,10 @@ const BookingSuccessToast = ({ isVisible, onClose, bookingId }) => {
       <div className="toast-icon">✓</div>
       <div className="toast-content">
         <span className="toast-meta">SYSTEM_MESSAGE // SUCCESS</span>
-        <span className="toast-title">СЪЁМКА_ЗАБРОНИРОВАНА</span>
+        <span className="toast-title">{message}</span>
         <p className="toast-message">
           ID: #{bookingId || "LR-92104"} <br />
-          Ознакомиться с заявкой вы можете в профиле.
+          {extraMessage}
         </p>
         <button className="toast-close" onClick={onClose}>
           CLOSE[X]
@@ -28,4 +34,4 @@ const BookingSuccessToast = ({ isVisible, onClose, bookingId }) => {
   );
 };
 
-export default BookingSuccessToast;
+export default SuccessToast;

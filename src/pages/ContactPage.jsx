@@ -1,9 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
+import { addToast } from "../redux/slices/toastSlice";
 
 const ContactPage = () => {
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Ваше сообщение успешно отправлено!");
+    dispatch(
+      addToast({
+        type: "booking",
+        bookingId: "MESSAGE_WAS_SENT",
+        message: "Ваше сообщение отправлено",
+        extraMessage:
+          "При необходимости ответ придет на вашу электронную почту",
+      })
+    );
   };
 
   return (

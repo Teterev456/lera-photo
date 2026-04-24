@@ -52,7 +52,8 @@ const UserProfilePage = () => {
         addToast({
           type: "booking",
           bookingId: "PROFILE_UPDATED",
-          errorMessage: "Профиль успешно обновлён",
+          message: "Профиль успешно обновлён",
+          extraMessage: "Ваши данные успешно обновлены",
         })
       );
     } catch (error) {

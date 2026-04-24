@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { removeToast } from "../../redux/slices/toastSlice";
-import BookingSuccessToast from "./BookingSuccessToast";
+import SuccessToast from "./SuccessToast";
 import ErrorToast from "./ErrorToast";
 
 const ToastContainer = () => {
@@ -13,11 +13,13 @@ const ToastContainer = () => {
     <div className="toast-container">
       {toasts.map((toast) =>
         toast.type === "booking" ? (
-          <BookingSuccessToast
+          <SuccessToast
             key={toast.id}
             isVisible={true}
             onClose={() => dispatch(removeToast(toast.id))}
             bookingId={toast.bookingId}
+            message={toast.message}
+            extraMessage={toast.extraMessage}
           />
         ) : (
           <ErrorToast
