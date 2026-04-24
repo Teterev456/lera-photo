@@ -53,7 +53,7 @@ const UserProfilePage = () => {
           type: "booking",
           bookingId: "PROFILE_UPDATED",
           message: "Профиль успешно обновлён",
-          extraMessage: "Ваши данные успешно обновлены",
+          extraMessage: "Ваши данные успешно обновлены.",
         })
       );
     } catch (error) {
@@ -93,28 +93,29 @@ const UserProfilePage = () => {
       }
     }
     switch (sortBy) {
-      case "ВОЗРАСТАНИЮ_ID":
-        result.sort((a, b) => a.id - b.id);
-        break;
       case "УБЫВАНИЮ_ID":
         result.sort((a, b) => b.id - a.id);
         break;
-      case "ВОЗРАСТАНИЮ_ДАТЫ":
-        result.sort(
-          (a, b) => new Date(a.chosen_date) - new Date(b.chosen_date)
-        );
+      case "ВОЗРАСТАНИЮ_ID":
+        result.sort((a, b) => a.id - b.id);
         break;
       case "УБЫВАНИЮ_ДАТЫ":
         result.sort(
           (a, b) => new Date(b.chosen_date) - new Date(a.chosen_date)
         );
         break;
-      case "ВОЗРАСТАНИЮ_СТОИМОСТИ":
-        result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+      case "ВОЗРАСТАНИЮ_ДАТЫ":
+        result.sort(
+          (a, b) => new Date(a.chosen_date) - new Date(b.chosen_date)
+        );
         break;
       case "УБЫВАНИЮ_СТОИМОСТИ":
         result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
         break;
+      case "ВОЗРАСТАНИЮ_СТОИМОСТИ":
+        result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        break;
+
       default:
         break;
     }

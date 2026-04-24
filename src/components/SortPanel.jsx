@@ -35,12 +35,12 @@ const SortPanel = ({
           value={activeSortBy}
           onChange={(e) => onSortBy(e.target.value)}
         >
-          <option>ВОЗРАСТАНИЮ_ID</option>
           <option>УБЫВАНИЮ_ID</option>
-          <option>ВОЗРАСТАНИЮ_ДАТЫ</option>
+          <option>ВОЗРАСТАНИЮ_ID</option>
           <option>УБЫВАНИЮ_ДАТЫ</option>
-          <option>ВОЗРАСТАНИЮ_СТОИМОСТИ</option>
+          <option>ВОЗРАСТАНИЮ_ДАТЫ</option>
           <option>УБЫВАНИЮ_СТОИМОСТИ</option>
+          <option>ВОЗРАСТАНИЮ_СТОИМОСТИ</option>
         </select>
       </div>
 
