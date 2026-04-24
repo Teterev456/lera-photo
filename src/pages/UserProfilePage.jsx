@@ -9,11 +9,20 @@ import { fetchCategories } from "../redux/slices/bookingSlice";
 import { setUser } from "../redux/slices/authorizationSlice";
 import { addToast } from "../redux/slices/toastSlice";
 import { updateUserProfile } from "../services/api";
+import SortPanel from "../components/SortPanel";
+
+const statusMap = {
+  НОВЫЕ: "new",
+  ПОДТВЕРЖДЁННЫЕ: "confirmed",
+  ЗАВЕРШЁННЫЕ: "completed",
+  ОТМЕНЁННЫЕ: "cancelled",
+};
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.authorization);
   const { userBookings, loading } = useSelector((state) => state.profile);
+  const { sessionTypes } = useSelector((state) => state.booking);
 
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -32,8 +41,6 @@ const UserProfilePage = () => {
       dispatch(fetchCategories());
     }
   }, [dispatch, user]);
-
-  const reversedBookings = [...userBookings].reverse();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,6 +68,62 @@ const UserProfilePage = () => {
       setIsSaving(false);
     }
   };
+
+  const [filterType, setFilterType] = React.useState("ВСЕ");
+  const [filterStatus, setFilterStatus] = React.useState("ВСЕ");
+  const [sortBy, setSortBy] = React.useState("УБЫВАНИЮ_ID");
+
+  const filteredAndSortedBookings = React.useMemo(() => {
+    if (!userBookings) return [];
+
+    let result = [...userBookings];
+
+    if (filterType !== "ВСЕ") {
+      const categoryId = sessionTypes.find((t) => t.title === filterType)?.id;
+      if (categoryId) {
+        result = result.filter((b) => b.type === categoryId);
+      }
+    }
+
+    if (filterStatus !== "ВСЕ") {
+      const statusValue = statusMap[filterStatus];
+      if (statusValue) {
+        result = result.filter((b) => b.status === statusValue);
+      }
+    }
+    switch (sortBy) {
+      case "ВОЗРАСТАНИЮ_ID":
+        result.sort((a, b) => a.id - b.id);
+        break;
+      case "УБЫВАНИЮ_ID":
+        result.sort((a, b) => b.id - a.id);
+        break;
+      case "ВОЗРАСТАНИЮ_ДАТЫ":
+        result.sort(
+          (a, b) => new Date(a.chosen_date) - new Date(b.chosen_date)
+        );
+        break;
+      case "УБЫВАНИЮ_ДАТЫ":
+        result.sort(
+          (a, b) => new Date(b.chosen_date) - new Date(a.chosen_date)
+        );
+        break;
+      case "ВОЗРАСТАНИЮ_СТОИМОСТИ":
+        result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        break;
+      case "УБЫВАНИЮ_СТОИМОСТИ":
+        result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  }, [userBookings, filterType, filterStatus, sortBy, sessionTypes]);
+
+  const handleFilterType = (type) => setFilterType(type);
+  const handleFilterStatus = (status) => setFilterStatus(status);
+  const handleSortBy = (value) => setSortBy(value);
 
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -130,20 +193,29 @@ const UserProfilePage = () => {
               [ АКТИВНЫЕ_ЗАКАЗЫ ]
             </span>
             <h2 className="section-title">ВАШИ ФОТОСЕССИИ</h2>
+            <SortPanel
+              onFilterType={handleFilterType}
+              onFilterStatus={handleFilterStatus}
+              onSortBy={handleSortBy}
+              activeFilterType={filterType}
+              activeFilterStatus={filterStatus}
+              activeSortBy={sortBy}
+            />
             <div className="booking-list">
-              {reversedBookings.length === 0 ? (
+              {filteredAndSortedBookings.length === 0 ? (
                 <div className="empty-state">
                   <div className="empty-icon">∅</div>
                   <p className="empty-title">НЕТ_ЗАКАЗОВ</p>
                   <p className="empty-subtitle">
-                    В вашей истории заказов не найдено бронирований
+                    В вашей истории заказов не найдено бронирований с заданными
+                    параметрами
                   </p>
                   <Link to="/booking" className="empty-action">
                     ОФОРМИТЬ БРОНЬ →
                   </Link>
                 </div>
               ) : (
-                reversedBookings.map((booking) => (
+                filteredAndSortedBookings.map((booking) => (
                   <BookedItem key={booking.id} booking={booking} />
                 ))
               )}

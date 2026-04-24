@@ -1125,7 +1125,7 @@ nav .logo {
 .section-title {
   font-weight: 900;
   font-size: 2.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   letter-spacing: -0.04em;
   text-transform: uppercase;
 }
@@ -1455,6 +1455,76 @@ nav .logo {
   border-left: 3px solid var(--blue);
   word-break: break-word;
   white-space: normal;
+}
+
+/* Sort panel */
+.sort-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--black);
+}
+
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sort-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+    font-weight: 700;
+}
+
+.sort-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.sort-btn {
+    background: var(--white);
+    border: 1px solid var(--black);
+    padding: 0.4rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-weight: 700;
+}
+
+.sort-btn:hover {
+    background: var(--black);
+    color: var(--white);
+}
+
+.sort-btn.active {
+    background: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+}
+
+.sort-select {
+    background: var(--white);
+    border: 1px solid var(--black);
+    padding: 0.4rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+    font-weight: 700;
+}
+
+.sort-select:focus {
+    border-color: var(--blue);
 }
 
 /* Small meta text variant */
