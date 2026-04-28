@@ -2,21 +2,49 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 import { addToast } from "../redux/slices/toastSlice";
+import { sendContactMessage } from "../services/api";
 
 const ContactPage = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = React.useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [isSending, setIsSending] = React.useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      addToast({
-        type: "booking",
-        bookingId: "MESSAGE_WAS_SENT",
-        message: "Ваше сообщение отправлено",
-        extraMessage:
-          "При необходимости ответ придет на вашу электронную почту",
-      })
-    );
+    setIsSending(true);
+    try {
+      await sendContactMessage(formData);
+      dispatch(
+        addToast({
+          type: "booking",
+          bookingId: "MESSAGE_WAS_SENT",
+          message: "Ваше сообщение отправлено",
+          extraMessage:
+            "При необходимости ответ придет на вашу электронную почту",
+        })
+      );
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      dispatch(
+        addToast({
+          type: "error",
+          errorMessage: "Ошибка отправки. Попробуйте позже.",
+          errorCode: error,
+        })
+      );
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -57,8 +85,14 @@ const ContactPage = () => {
                 >
                   ↗ ВКОНТАКТЕ
                 </a>
-                <p>+7 (911) 366-80-71</p>
+                <p className="meta-text">+7 (911) 366-80-71</p>
               </div>
+              <p
+                className="meta-text "
+                style={{ opacity: 0.5, marginTop: "0.5rem", fontSize: "16px" }}
+              >
+                НОМЕР ТЕЛЕФОНА ДЛЯ СВЯЗИ В МЕССЕНДЖЕРАХ
+              </p>
             </div>
           </div>
         </div>
@@ -73,36 +107,40 @@ const ContactPage = () => {
             </div>
 
             <div className="input-group">
-              <label className="meta-text">ВАШЕ_ПОЛНОЕ_ИМЯ</label>
-              <input type="text" placeholder="Введите ваше имя..." required />
+              <label className="meta-text">ВАШЕ_ИМЯ</label>
+              <input
+                type="text"
+                name="name"
+                minLength={8}
+                value={formData.name}
+                placeholder="Введите ваше имя..."
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="input-group">
               <label className="meta-text">ВАША_ЭЛЕКТРОННАЯ_ПОЧТА</label>
               <input
                 type="email"
+                name="email"
+                minLength={5}
+                value={formData.email}
                 placeholder="Введите вашу эл. почту..."
+                onChange={handleChange}
                 required
               />
-            </div>
-
-            <div className="input-group">
-              <label className="meta-text">ТИП_СЪЁМОК</label>
-              <select required defaultValue="">
-                <option value="" disabled>
-                  Выберите тип съёмки...
-                </option>
-                <option value="INDIVIDUAL">ИНДИВИДУАЛЬНАЯ</option>
-                <option value="COLLECTIVE">ГРУППОВАЯ</option>
-                <option value="REPORTAGE">РЕПОРТАЖНАЯ</option>
-              </select>
             </div>
 
             <div className="input-group">
               <label className="meta-text">СООБЩЕНИЕ</label>
               <textarea
                 rows="5"
+                name="message"
+                minLength={20}
+                value={formData.message}
                 placeholder="Опишите ваше предложение или задайте вопрос..."
+                onChange={handleChange}
                 required
               />
             </div>
@@ -111,8 +149,9 @@ const ContactPage = () => {
               type="submit"
               className="login-submit"
               style={{ marginBottom: 0 }}
+              disabled={isSending}
             >
-              ОТПРАВИТЬ →
+              {isSending ? "ОТПРАВКА..." : "ОТПРАВИТЬ →"}
             </button>
           </form>
         </div>

@@ -26,7 +26,6 @@ const App = () => {
         const response = await getCurrentUser();
         dispatch(setUser(response.data));
       } catch (error) {
-        console.log("Пользователь не авторизован");
         dispatch(setUser(null));
       } finally {
         dispatch(setLoading(false));

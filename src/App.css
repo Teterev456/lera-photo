@@ -712,6 +712,10 @@ nav .logo {
   font-size: 20px;
 }
 
+.social-links-small p:hover {
+  color: var(--blue);
+}
+
 /* Footer */
 .site-footer {
   display: flex;

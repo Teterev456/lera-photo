@@ -36,5 +36,6 @@ export const getBookingMessages = (bookingId) =>
 export const sendBookingMessage = (bookingId, text) =>
   api.post(`/bookings/${bookingId}/messages/`, { text });
 export const updateUserProfile = (data) => api.patch("/user/update/", data);
+export const sendContactMessage = (data) => api.post("/contact/", data);
 
 export default api;
