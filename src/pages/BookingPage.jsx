@@ -37,7 +37,7 @@ const BookingPage = () => {
         <h2 className="display-medium overline" style={{ lineHeight: "70px" }}>
           БРОНЬ ФОТОСЕССИИ
         </h2>
-        <div className="meta-text">ВЫБЕРИТЕ ДАТУ И ТИП_СЪЁМКИ</div>
+        <div className="meta-text">ВЫБЕРИТЕ ДАТУ И ТИП СЪЁМКИ</div>
       </div>
 
       <div className="booking-container">

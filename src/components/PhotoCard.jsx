@@ -1,8 +1,8 @@
 import React from "react";
 
-const PhotoCard = ({ id, image, code, type, title }) => {
+const PhotoCard = ({ id, image, code, type, title, images, onOpen }) => {
   return (
-    <article key={id} className="project-card panel">
+    <article key={id} className="project-card panel" onClick={onOpen}>
       <img src={image} alt={type} />
       <div className="project-overlay">
         <div className="project-meta-top meta-text">

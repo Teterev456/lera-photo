@@ -26,7 +26,7 @@ const ContactPage = () => {
       await sendContactMessage(formData);
       dispatch(
         addToast({
-          type: "booking",
+          type: "success",
           bookingId: "MESSAGE_WAS_SENT",
           message: "Ваше сообщение отправлено",
           extraMessage:

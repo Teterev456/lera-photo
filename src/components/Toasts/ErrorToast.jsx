@@ -1,6 +1,6 @@
 import React from "react";
 
-const ErrorToast = ({ isVisible, onClose, errorCode }) => {
+const ErrorToast = ({ isVisible, onClose, errorCode, errorMessage }) => {
   React.useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
@@ -20,14 +20,12 @@ const ErrorToast = ({ isVisible, onClose, errorCode }) => {
         <span className="toast-title">
           {errorCode === 401 ? "ОШИБКА АВТОРИЗАЦИИ" : "ОШИБКА"}
         </span>
-        <p className="toast-message">
-          ВВЕДЕНЫ НЕВЕРНЫЕ ДАННЫЕ. ПОЖАЛУЙСТА, ПОПРОБУЙТЕ СНОВА.
-        </p>
+        <p className="toast-message">{errorMessage}</p>
         <span
           className="toast-meta"
           style={{ marginTop: "0.5rem", opacity: 0.4 }}
         >
-          TS: {new Date().toLocaleTimeString()}
+          SYS/TIME: {new Date().toLocaleTimeString()}
         </span>
         <button className="toast-close" onClick={onClose}>
           [X]

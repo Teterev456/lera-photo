@@ -12,7 +12,7 @@ const ToastContainer = () => {
   return (
     <div className="toast-container">
       {toasts.map((toast) =>
-        toast.type === "booking" ? (
+        toast.type === "success" ? (
           <SuccessToast
             key={toast.id}
             isVisible={true}
@@ -27,6 +27,7 @@ const ToastContainer = () => {
             isVisible={true}
             onClose={() => dispatch(removeToast(toast.id))}
             errorCode={toast.errorCode}
+            errorMessage={toast.errorMessage}
           />
         )
       )}

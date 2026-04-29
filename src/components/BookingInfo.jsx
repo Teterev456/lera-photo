@@ -56,7 +56,7 @@ const BookingInfo = () => {
 
       dispatch(
         addToast({
-          type: "booking",
+          type: "success",
           bookingId,
           message: "Съёмки успешно забронированы",
           extraMessage:
@@ -174,13 +174,14 @@ const BookingInfo = () => {
             </label>
             <textarea
               rows="5"
-              placeholder="Дополнительная информация к фотосессии..."
+              placeholder="Дополнительная информация(Место съёмок, желаемый стиль)..."
               required
               value={text}
-              style={{ minHeight: "100px", maxHeight: "218px" }}
+              style={{ minHeight: "100px", maxHeight: "400px" }}
               onChange={(e) => {
                 setText(e.target.value);
               }}
+              maxLength={1024}
             />
             <button
               type="submit"

@@ -50,7 +50,7 @@ const UserProfilePage = () => {
       dispatch(setUser(response.data));
       dispatch(
         addToast({
-          type: "booking",
+          type: "success",
           bookingId: "PROFILE_UPDATED",
           message: "Профиль успешно обновлён",
           extraMessage: "Ваши данные успешно обновлены.",
@@ -190,9 +190,9 @@ const UserProfilePage = () => {
         </section>
 
         <section className="section-right">
-          <div className="bookings-pane">
+          <div className="bookings-panel">
             <span className="meta-text section-label meta-text-sm">
-              [ АКТИВНЫЕ_ЗАКАЗЫ ]
+              [ АКТИВНЫЕ ЗАКАЗЫ ]
             </span>
             <h2 className="section-title">ВАШИ ФОТОСЕССИИ</h2>
             <SortPanel

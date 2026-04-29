@@ -1,12 +1,17 @@
 import React from "react";
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import indexImage from "../assets/img/index.jpg";
 import projects from "../assets/data/projects";
 import PhotoCard from "../components/PhotoCard";
 
 const IndexPage = () => {
+  const navigate = useNavigate();
+
+  const handleOpen = (projectId) => {
+    navigate(`/archive?project=${projectId}&image=0`);
+  };
   const date = dayjs(new Date());
   const dateStr = date.format("DD:MM:YYYY");
 
@@ -88,7 +93,12 @@ const IndexPage = () => {
 
       <section className="featured-grid">
         {projects.slice(-2).map((project) => (
-          <PhotoCard key={project.id} {...project} />
+          <PhotoCard
+            key={project.id}
+            image={project.images[0]}
+            onOpen={() => handleOpen(project.id, 0)}
+            {...project}
+          />
         ))}
       </section>
     </div>
