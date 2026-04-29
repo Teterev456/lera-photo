@@ -167,6 +167,8 @@ const LoginPage = () => {
                   placeholder="Client"
                   required
                   value={username1}
+                  minLength={2}
+                  maxLength={100}
                   onChange={(e) => setUsername1(e.target.value)}
                 />
               </div>
@@ -179,6 +181,7 @@ const LoginPage = () => {
                     placeholder="client@example.com"
                     required
                     value={email1}
+                    maxLength={254}
                     onChange={(e) => setEmail1(e.target.value)}
                   />
                 </div>
@@ -190,6 +193,7 @@ const LoginPage = () => {
                   type="password"
                   placeholder="••••••••"
                   required
+                  minLength={8}
                   value={password1}
                   onChange={(e) => setPassword1(e.target.value)}
                 />
@@ -202,6 +206,7 @@ const LoginPage = () => {
                     type="password"
                     placeholder="••••••••"
                     required
+                    minLength={8}
                     value={password2}
                     onChange={(e) => setPassword2(e.target.value)}
                   />
