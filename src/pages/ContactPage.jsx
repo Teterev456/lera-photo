@@ -111,7 +111,8 @@ const ContactPage = () => {
               <input
                 type="text"
                 name="name"
-                minLength={8}
+                minLength={2}
+                maxLength={100}
                 value={formData.name}
                 placeholder="Введите ваше имя..."
                 onChange={handleChange}
@@ -124,7 +125,7 @@ const ContactPage = () => {
               <input
                 type="email"
                 name="email"
-                minLength={5}
+                maxLength={254}
                 value={formData.email}
                 placeholder="Введите вашу эл. почту..."
                 onChange={handleChange}
@@ -138,6 +139,8 @@ const ContactPage = () => {
                 rows="5"
                 name="message"
                 minLength={20}
+                maxLength={2000}
+                style={{ maxHeight: "660px" }}
                 value={formData.message}
                 placeholder="Опишите ваше предложение или задайте вопрос..."
                 onChange={handleChange}

@@ -177,11 +177,12 @@ const BookingInfo = () => {
               placeholder="Дополнительная информация(Место съёмок, желаемый стиль)..."
               required
               value={text}
-              style={{ minHeight: "100px", maxHeight: "400px" }}
               onChange={(e) => {
                 setText(e.target.value);
               }}
-              maxLength={1024}
+              minLength={50}
+              maxLength={2000}
+              style={{ minHeight: "100px", maxHeight: "400px" }}
             />
             <button
               type="submit"

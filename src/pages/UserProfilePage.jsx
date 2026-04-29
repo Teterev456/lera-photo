@@ -27,6 +27,7 @@ const UserProfilePage = () => {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [isSaving, setIsSaving] = React.useState(false);
+  const [isChanged, setIsChanged] = React.useState(false);
 
   React.useEffect(() => {
     if (user) {
@@ -56,6 +57,7 @@ const UserProfilePage = () => {
           extraMessage: "Ваши данные успешно обновлены.",
         })
       );
+      setIsChanged(false);
     } catch (error) {
       console.error("Ошибка обновления:", error);
       dispatch(
@@ -157,7 +159,7 @@ const UserProfilePage = () => {
 
           <form
             onSubmit={handleSubmit}
-            style={{ maxWidth: 400, marginTop: "25px" }}
+            style={{ maxWidth: 400, marginTop: "120px" }}
           >
             <div className="profile-form-group">
               <label className="profile-form-label meta-text-sm">
@@ -167,7 +169,12 @@ const UserProfilePage = () => {
                 type="text"
                 className="profile-form-input"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setIsChanged(true);
+                }}
+                minLength={5}
+                maxLength={100}
                 required
               />
             </div>
@@ -179,11 +186,23 @@ const UserProfilePage = () => {
                 type="email"
                 className="profile-form-input"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setIsChanged(true);
+                }}
+                maxLength={254}
                 required
               />
             </div>
-            <button type="submit" className="save-btn" disabled={isSaving}>
+            <button
+              type="submit"
+              className="save-btn"
+              disabled={!isChanged || isSaving}
+              style={{
+                opacity: !isChanged ? "0.5" : "1",
+                cursor: !isChanged ? "default" : "pointer",
+              }}
+            >
               {isSaving ? "СОХРАНЕНИЕ..." : "СОХРАНИТЬ"}
             </button>
           </form>
