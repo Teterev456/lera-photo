@@ -9,7 +9,9 @@ import api from "../services/api";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, loading } = useSelector((state) => state.authorization);
+  const { user, loading, isAdmin } = useSelector(
+    (state) => state.authorization
+  );
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -65,6 +67,19 @@ const Header = () => {
           <NavLink to="/profile" className="nav-item">
             {user.username}
           </NavLink>
+        </>
+      )}
+
+      {!loading && user && isAdmin && (
+        <>
+          <NavLink to="/dashboard" className="nav-item">
+            Администрирование
+          </NavLink>
+        </>
+      )}
+
+      {!loading && user && (
+        <>
           <NavLink to="#" className="nav-item exit" onClick={handleLogout}>
             ВЫЙТИ
           </NavLink>

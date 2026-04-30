@@ -25,7 +25,7 @@ const ErrorToast = ({ isVisible, onClose, errorCode, errorMessage }) => {
           className="toast-meta"
           style={{ marginTop: "0.5rem", opacity: 0.4 }}
         >
-          SYS/TIME: {new Date().toLocaleTimeString()}
+          SYS_TIME: {new Date().toLocaleTimeString()}
         </span>
         <button className="toast-close" onClick={onClose}>
           [X]

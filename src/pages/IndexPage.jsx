@@ -19,7 +19,7 @@ const IndexPage = () => {
     <div className="page-section">
       <header className="hero panel">
         <div className="hero-title-wrapper panel">
-          <div className="meta-text system-code">SYS.DATE // {dateStr}</div>
+          <div className="meta-text system-code">SYS_DATE // {dateStr}</div>
           <h1
             className="display-huge"
             style={{ fontSize: "clamp(4rem, 9vw, 9rem)" }}

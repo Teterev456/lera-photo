@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   loading: true,
   error: null,
+  isAdmin: false,
 };
 
 const authSlice = createSlice({
@@ -13,6 +14,7 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
       state.error = null;
+      state.isAdmin = action.payload?.is_staff || false;
       state.loading = false;
     },
     clearUser: (state) => {

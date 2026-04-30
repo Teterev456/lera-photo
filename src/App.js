@@ -15,6 +15,7 @@ import "./App.css";
 import UserProfilePage from "./pages/UserProfilePage";
 import { setLoading, setUser } from "./redux/slices/authorizationSlice";
 import { getCurrentUser } from "./services/api";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/dashboard" element={<AdminDashboardPage />} />
 
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const SortPanel = ({
   onFilterType,
@@ -8,9 +9,13 @@ const SortPanel = ({
   activeFilterType,
   activeFilterStatus,
   activeSortBy,
+  onSearch,
+  searchQuery,
 }) => {
   const { sessionTypes } = useSelector((state) => state.booking);
   const typeOptions = ["ВСЕ", ...sessionTypes.map((t) => t.title)];
+  const { isAdmin } = useSelector((state) => state.authorization);
+  const location = useLocation();
   return (
     <div className="sort-panel">
       <div className="sort-group">
@@ -62,6 +67,18 @@ const SortPanel = ({
           )}
         </div>
       </div>
+      {isAdmin && location.pathname === "/dashboard" && (
+        <div className="search-row">
+          <span className="filter-label">ПОИСК:</span>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="ВВЕДИТЕ ИМЯ ИЛИ ID..."
+            value={searchQuery}
+            onChange={(e) => onSearch(e.target.value)}
+          />
+        </div>
+      )}
     </div>
   );
 };
