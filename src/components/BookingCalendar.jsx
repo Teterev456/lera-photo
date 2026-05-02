@@ -13,7 +13,7 @@ const BookingCalendar = () => {
 
   const [currentMonth, setCurrentMonth] = useState(dayjs(new Date()));
 
-  const blockedDates = ["2026-04-12", "2026-04-19", "2026-04-26"];
+  const blockedDates = ["2026-04-12", "2026-04-19", "2026-05-12"];
   const bookedDates = ["2026-04-17", "2026-04-13", "2026-04-08"];
 
   const getWeeksArray = () => {

@@ -37,5 +37,10 @@ export const sendBookingMessage = (bookingId, text) =>
   api.post(`/bookings/${bookingId}/messages/`, { text });
 export const updateUserProfile = (data) => api.patch("/user/update/", data);
 export const sendContactMessage = (data) => api.post("/contact/", data);
+export const getBookingById = (id) => api.get(`/bookings/${id}/`);
+export const updateBookingStatus = (id, status) =>
+  api.patch(`/bookings/${id}/`, { status });
+export const updateBookingNotes = (id, notes) =>
+  api.patch(`/bookings/${id}/`, { manager_comment: notes });
 
 export default api;

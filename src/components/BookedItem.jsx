@@ -4,6 +4,7 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import BookedItemMessage from "./BookedItemMessage";
 import { fetchMessages, postMessage } from "../redux/slices/chatSlice";
+import dayjs from "dayjs";
 
 const selectMessages = createSelector(
   (state) => state.chat.entities,
@@ -42,6 +43,9 @@ const BookedItem = ({ booking }) => {
       setIsSending(false);
     }
   };
+
+  const dayjsDate = dayjs(booking.chosen_date);
+  const formatted = dayjsDate.format("DD-MM-YYYY");
 
   const category = sessionTypes?.find((type) => type.id === booking.type);
   const categoryTitle = category ? category.title : "НЕИЗВЕСТНАЯ";
@@ -104,7 +108,7 @@ const BookedItem = ({ booking }) => {
         </div>
       </div>
       <div className="meta-text" style={{ fontSize: "14px" }}>
-        {booking.chosen_date}
+        {formatted}
         <br />
         {booking.chosen_time}
       </div>

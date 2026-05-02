@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 
@@ -27,9 +27,7 @@ const sortMap = {
 const AdminDashboardPage = () => {
   const dispatch = useDispatch();
   const { sessionTypes } = useSelector((state) => state.booking);
-  const { user, isAdmin, loading } = useSelector(
-    (state) => state.authorization
-  );
+  const { loading } = useSelector((state) => state.authorization);
   const { bookings, loadingBookings } = useSelector((state) => state.admin);
 
   const [filterType, setFilterType] = React.useState("ВСЕ");
@@ -61,7 +59,6 @@ const AdminDashboardPage = () => {
     }
     params.ordering = sortMap[sortBy];
 
-    console.log("Отправка запроса с параметрами:", params);
     dispatch(fetchAllBookings(params));
   }, [
     dispatch,
@@ -78,7 +75,6 @@ const AdminDashboardPage = () => {
   const handleSearch = (query) => setSearchQuery(query);
 
   if (loading) return <div>Загрузка...</div>;
-  if (!user || !isAdmin) return <Navigate to="/login" replace />;
   if (loadingBookings)
     return <div className="loading">Загрузка заказов...</div>;
 

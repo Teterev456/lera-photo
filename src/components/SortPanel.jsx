@@ -67,7 +67,7 @@ const SortPanel = ({
           )}
         </div>
       </div>
-      {isAdmin && location.pathname === "/dashboard" && (
+      {isAdmin && location.pathname !== "/profile" && (
         <div className="search-row">
           <span className="filter-label">ПОИСК:</span>
           <input

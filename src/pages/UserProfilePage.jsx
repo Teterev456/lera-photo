@@ -1,7 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import BookedItem from "../components/BookedItem";
 import { fetchUserBookings } from "../redux/slices/profileSlice";
@@ -128,10 +128,6 @@ const UserProfilePage = () => {
   const handleFilterType = (type) => setFilterType(type);
   const handleFilterStatus = (status) => setFilterStatus(status);
   const handleSortBy = (value) => setSortBy(value);
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
 
   if (loading) return <div>Загрузка заказов...</div>;
 

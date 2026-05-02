@@ -16,6 +16,9 @@ import UserProfilePage from "./pages/UserProfilePage";
 import { setLoading, setUser } from "./redux/slices/authorizationSlice";
 import { getCurrentUser } from "./services/api";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import DetailOrderCardPage from "./pages/DetailOrderCardPage";
+import AdminRoute from "./components/Routes/AdminRoute";
+import ProtectedRoute from "./components/Routes/ProtectedRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,11 +49,21 @@ const App = () => {
         <Routes>
           <Route path="/" element={<IndexPage />} />
           <Route path="/archive" element={<ArchivePage />} />
-          <Route path="/booking" element={<BookingPage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/profile" element={<UserProfilePage />} />
-          <Route path="/dashboard" element={<AdminDashboardPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/booking" element={<BookingPage />} />
+            <Route path="/profile" element={<UserProfilePage />} />
+          </Route>
+
+          <Route element={<AdminRoute />}>
+            <Route path="/dashboard" element={<AdminDashboardPage />} />
+            <Route
+              path="/dashboard/orders/:orderId"
+              element={<DetailOrderCardPage />}
+            />
+          </Route>
 
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>

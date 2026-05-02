@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 
 import {
   fetchCategories,
@@ -15,7 +14,6 @@ import BookingInfo from "../components/BookingInfo";
 const BookingPage = () => {
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.authorization);
   const { sessionTypes, chosenTypeId, loading, chosenTime, timeSlots } =
     useSelector((state) => state.booking);
 
@@ -25,10 +23,6 @@ const BookingPage = () => {
 
   if (loading) {
     return <div className="page-section">Загрузка типов съёмки...</div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
   }
 
   return (

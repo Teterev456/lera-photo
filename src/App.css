@@ -3,6 +3,7 @@
   --black: #0A0A0A;
   --white: #FFFFFF;
   --gray: #E5E5E5;
+  --red: #FF3B30;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --grid-gap: 1px;
@@ -1332,7 +1333,7 @@ nav .logo {
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 
 .detail-label {
@@ -1395,12 +1396,18 @@ nav .logo {
   border-color: var(--blue);
 }
 
-.status-badge.cancelled,
 .status-badge.completed {
   border: 1px solid var(--white);
   color: var(--white);
   background-color: var(--black);
 }
+
+.status-badge.cancelled{
+  border: 1px solid var(--white);
+  color: var(--white);
+  background-color: var(--red);
+}
+
 
 .booking-details {
   margin-top: 1rem;
@@ -1803,7 +1810,6 @@ nav .logo {
   letter-spacing: -0.02em;
   text-transform: uppercase;
   margin-bottom: 2rem;
-  border-bottom: 2px solid var(--black);
   padding-bottom: 1rem;
 }
 
@@ -2121,4 +2127,277 @@ nav .logo {
 .price-text {
   color: var(--blue);
   font-weight: 900;
+}
+
+/* DetailOrderCard */
+
+.order-detail-wrapper {
+  background-color: var(--black);
+  color: var(--black);
+  font-family: var(--font-sans);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.order-nav {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto auto;
+  gap: var(--grid-gap);
+  background-color: var(--gray);
+}
+
+.order-main {
+  display: grid;
+  grid-template-columns: 350px 1fr 400px;
+  background-color: var(--gray);
+  gap: var(--grid-gap);
+  height: calc(100vh - 60px);
+  overflow: hidden;
+}
+
+.order-info-panel,
+.order-chat-panel,
+.order-admin-panel {
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.order-chat-panel {
+  border-left: 1px solid var(--gray);
+  border-right: 1px solid var(--gray);
+}
+
+.panel-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid var(--black);
+}
+
+.panel-content {
+  padding: 2rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--black);
+  margin-bottom:0.6rem;
+}
+
+.back-link:hover {
+  color: var(--blue);
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title {
+  font-weight: 900;
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.detail-row.last {
+  border-bottom: none;
+}
+
+.detail-value.mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+
+.detail-value.price-large {
+  font-size: 1.5rem;
+  color: var(--blue);
+}
+
+/* Chat Styles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.message-list {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: #FAFAFA;
+}
+
+.message-bubble {
+  max-width: 85%;
+  padding: 1rem;
+  border: 1px solid var(--black);
+  position: relative;
+}
+
+.msg-admin {
+  align-self: flex-end;
+  background: var(--black);
+  color: var(--white);
+}
+
+.msg-client {
+  align-self: flex-start;
+  background: var(--white);
+  color: var(--black);
+}
+
+.msg-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+}
+
+.chat-input-area {
+  padding: 1.5rem;
+  border-top: 2px solid var(--black);
+  background: var(--white);
+}
+
+.chat-textarea {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  resize: none;
+  outline: none;
+}
+
+.chat-send-btn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 0 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.chat-send-btn:hover {
+  background: var(--blue);
+}
+
+/* Admin Controls */
+.section-label.status-actions-label {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.admin-notes {
+  width: 100%;
+  height: 150px;
+  border: 1px solid var(--black);
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  outline: none;
+  resize: none;
+}
+
+.admin-notes:focus {
+  border-color: var(--blue);
+}
+
+.save-notes-btn {
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+  margin-top: 0;
+}
+
+.save-notes-btn:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.action-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.btn-action {
+  background: var(--white);
+  border: 1px solid var(--black);
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-action:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+.btn-action.confirmed {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+
+.btn-action.confirmed:hover {
+  background: var(--black);
+  border-color: var(--black);
+}
+
+.btn-action.completed {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+
+.btn-action.completed:hover {
+  background: var(--black);
+  border-color: var(--black);
+}
+
+.btn-action.danger {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+.btn-action.danger:hover {
+  border-color: var(--black);
 }
